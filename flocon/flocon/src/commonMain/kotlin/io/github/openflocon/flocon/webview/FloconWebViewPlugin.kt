@@ -79,20 +79,19 @@ object FloconWebView : FloconPluginFactory<FloconWebViewConfig, FloconWebViewPlu
         pluginConfig: FloconWebViewConfig,
         floconConfig: FloconConfig,
         encoder: FloconEncoder,
-    ): FloconWebViewPlugin {
-        return FloconWebViewPluginImpl(
-            sender = floconConfig.client as FloconMessageSender,
-            encoder = encoder,
-        )
-            .also { FloconWebViewPluginImpl.plugin = it }
-    }
+    ): FloconWebViewPlugin = FloconWebViewPluginImpl(
+        sender = floconConfig.client as FloconMessageSender,
+        encoder = encoder,
+    )
+        .also { FloconWebViewPluginImpl.plugin = it }
 }
 
 @OptIn(ExperimentalUuidApi::class, ExperimentalTime::class)
 internal class FloconWebViewPluginImpl(
     private val sender: FloconMessageSender,
     private val encoder: FloconEncoder,
-) : FloconPlugin, FloconWebViewPlugin {
+) : FloconPlugin,
+    FloconWebViewPlugin {
     override val key: String
         get() = Protocol.ToDevice.WebView.Plugin
 

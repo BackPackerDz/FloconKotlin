@@ -12,10 +12,8 @@ class DashboardBuilder(private val id: String) {
         containers.add(container)
     }
 
-    fun build(): DashboardConfig {
-        return DashboardConfig(
-            id = id,
-            containers = containers
-        )
-    }
+    fun build(): DashboardConfig = DashboardConfig(
+        id = id,
+        containers = containers
+    )
 }

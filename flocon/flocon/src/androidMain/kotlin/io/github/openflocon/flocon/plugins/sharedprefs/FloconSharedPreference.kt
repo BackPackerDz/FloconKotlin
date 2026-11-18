@@ -40,39 +40,35 @@ data class FloconSharedPreference(
         sharedPreferences.edit().remove(columnName).apply()
     }
 
-    override suspend fun columns(): List<String> {
-        return sharedPreferences.all.keys.toList()
-    }
+    override suspend fun columns(): List<String> = sharedPreferences.all.keys.toList()
 
-    override suspend fun get(columnName: String): FloconPreferenceValue? {
-        return when (val value = sharedPreferences.all[columnName]) {
-            is String -> FloconPreferenceValue(
-                stringValue = value,
-            )
+    override suspend fun get(columnName: String): FloconPreferenceValue? = when (val value = sharedPreferences.all[columnName]) {
+        is String -> FloconPreferenceValue(
+            stringValue = value,
+        )
 
-            is Int -> FloconPreferenceValue(
-                intValue = value
-            )
+        is Int -> FloconPreferenceValue(
+            intValue = value
+        )
 
-            is Boolean -> FloconPreferenceValue(
-                booleanValue = value
-            )
+        is Boolean -> FloconPreferenceValue(
+            booleanValue = value
+        )
 
-            is Float -> FloconPreferenceValue(
-                floatValue = value
-            )
+        is Float -> FloconPreferenceValue(
+            floatValue = value
+        )
 
-            is Long -> FloconPreferenceValue(
-                longValue = value
-            )
+        is Long -> FloconPreferenceValue(
+            longValue = value
+        )
 
-            is Set<*> -> FloconPreferenceValue(
-                setStringValue = value
-                    .map { it.toString() }
-                    .toSet()
-            )
+        is Set<*> -> FloconPreferenceValue(
+            setStringValue = value
+                .map { it.toString() }
+                .toSet()
+        )
 
-            else -> null // Ne mappe pas les types non reconnus ou null
-        }
+        else -> null // Ne mappe pas les types non reconnus ou null
     }
 }

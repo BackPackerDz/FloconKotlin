@@ -13,5 +13,4 @@ interface FloconMessageSender {
      * and sent on connection. Kept so that existing implementations still compile.
      */
     fun sendPendingMessages()
-
 }

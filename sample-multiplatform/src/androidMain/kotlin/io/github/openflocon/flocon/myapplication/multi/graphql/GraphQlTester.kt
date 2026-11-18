@@ -23,17 +23,15 @@ class GraphQlTester(
                 override suspend fun intercept(
                     request: HttpRequest,
                     chain: HttpInterceptorChain
-                ): HttpResponse {
-                    return chain.proceed(
-                        request.newBuilder()
-                            .apply {
-                                if (!githubToken.isNullOrBlank()) {
-                                    addHeader("Authorization", "Bearer $githubToken")
-                                }
+                ): HttpResponse = chain.proceed(
+                    request.newBuilder()
+                        .apply {
+                            if (!githubToken.isNullOrBlank()) {
+                                addHeader("Authorization", "Bearer $githubToken")
                             }
-                            .build()
-                    )
-                }
+                        }
+                        .build()
+                )
             })
             .build()
     }
@@ -49,7 +47,6 @@ class GraphQlTester(
             val bio = response.data?.user?.bio
 
             println("Nom : $viewerName, avatarUrl : $avatarUrl, bio : $bio")
-
         } else if (response.hasErrors()) {
             println("Erreurs: ${response.errors?.joinToString { it.message }}")
         }

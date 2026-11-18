@@ -35,8 +35,7 @@ object SamplePreferences : FloconPreference {
         removed += columnName
     }
 
-    override suspend fun columns(): List<String> =
-        (listOf(COUNTER, "username") + values.keys).distinct() - removed
+    override suspend fun columns(): List<String> = (listOf(COUNTER, "username") + values.keys).distinct() - removed
 
     override suspend fun get(columnName: String): FloconPreferenceValue? = when (columnName) {
         COUNTER -> FloconPreferenceValue(intValue = counter)

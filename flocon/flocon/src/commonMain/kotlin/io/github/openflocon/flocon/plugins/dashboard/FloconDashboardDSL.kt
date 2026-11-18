@@ -136,7 +136,7 @@ internal class DashboardScopeImpl : DashboardScope {
                 submitText = submitText,
                 onSubmitted = onSubmitted
             ).apply { content() }
-            .build()
+                .build()
         flows.add(flowOf(config))
     }
 }

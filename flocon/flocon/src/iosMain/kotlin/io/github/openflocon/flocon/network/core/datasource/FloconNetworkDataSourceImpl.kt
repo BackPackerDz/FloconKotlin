@@ -45,13 +45,11 @@ internal class FloconNetworkDataSourceImpl(
         }
     }
 
-    override fun loadMocksFromFile(): List<MockNetworkResponse> {
-        return try {
-            read(FLOCON_NETWORK_MOCKS_JSON)?.let { encoder.decodeMocks(it) } ?: emptyList()
-        } catch (t: Throwable) {
-            FloconLogger.logError("issue in loadMocksFromFile", t)
-            emptyList()
-        }
+    override fun loadMocksFromFile(): List<MockNetworkResponse> = try {
+        read(FLOCON_NETWORK_MOCKS_JSON)?.let { encoder.decodeMocks(it) } ?: emptyList()
+    } catch (t: Throwable) {
+        FloconLogger.logError("issue in loadMocksFromFile", t)
+        emptyList()
     }
 
     override fun saveBadNetworkConfig(config: BadQualityConfig?) {
@@ -66,13 +64,11 @@ internal class FloconNetworkDataSourceImpl(
         }
     }
 
-    override fun loadBadNetworkConfig(): BadQualityConfig? {
-        return try {
-            read(FLOCON_NETWORK_BAD_CONFIG_JSON)?.let { encoder.decodeBadQualityConfig(it) }
-        } catch (t: Throwable) {
-            FloconLogger.logError("issue in loadBadNetworkConfig", t)
-            null
-        }
+    override fun loadBadNetworkConfig(): BadQualityConfig? = try {
+        read(FLOCON_NETWORK_BAD_CONFIG_JSON)?.let { encoder.decodeBadQualityConfig(it) }
+    } catch (t: Throwable) {
+        FloconLogger.logError("issue in loadBadNetworkConfig", t)
+        null
     }
 
     private fun write(fileName: String, content: String) {

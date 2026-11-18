@@ -40,14 +40,11 @@ internal class FloconHttpClientAndroid : FloconHttpClient {
         // Construction du multipart
         val multipartBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
-
             .addFormDataPart("remotePath", infos.path)
             .addFormDataPart("requestId", infos.requestId)
-
             .addFormDataPart("deviceId", deviceId)
             .addFormDataPart("appPackageName", appPackageName)
             .addFormDataPart("appInstance", appInstance.toString())
-
             .addFormDataPart("file", file.name, fileBody)
             .build()
 

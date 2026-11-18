@@ -16,16 +16,13 @@ object DummyHttpKtorCaller {
         client = httpClient
     }
 
-    suspend fun callGet(): String =
-        client.get("https://jsonplaceholder.typicode.com/todos/1").summary()
+    suspend fun callGet(): String = client.get("https://jsonplaceholder.typicode.com/todos/1").summary()
 
-    suspend fun callPost(): String =
-        client.post("https://jsonplaceholder.typicode.com/posts") {
-            setBody("{ \"test\" : \"yes\" }")
-        }.summary()
+    suspend fun callPost(): String = client.post("https://jsonplaceholder.typicode.com/posts") {
+        setBody("{ \"test\" : \"yes\" }")
+    }.summary()
 
-    suspend fun callNotFound(): String =
-        client.get("https://jsonplaceholder.typicode.com/todos/9999999").summary()
+    suspend fun callNotFound(): String = client.get("https://jsonplaceholder.typicode.com/todos/9999999").summary()
 
     private suspend fun HttpResponse.summary(): String = "${status.value} · ${bodyAsText().length} chars"
 }

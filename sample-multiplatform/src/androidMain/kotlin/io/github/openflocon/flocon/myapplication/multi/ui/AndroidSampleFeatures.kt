@@ -7,10 +7,10 @@ import androidx.room3.immediateTransaction
 import androidx.room3.useWriterConnection
 import io.github.openflocon.flocon.myapplication.multi.Databases
 import io.github.openflocon.flocon.myapplication.multi.database.insertSampleDog
-import io.github.openflocon.flocon.myapplication.multi.database.newFood
 import io.github.openflocon.flocon.myapplication.multi.database.model.DogEntity
 import io.github.openflocon.flocon.myapplication.multi.database.model.HumanEntity
 import io.github.openflocon.flocon.myapplication.multi.database.model.HumanWithDogEntity
+import io.github.openflocon.flocon.myapplication.multi.database.newFood
 import io.github.openflocon.flocon.myapplication.multi.room2.CatDatabase
 import io.github.openflocon.flocon.myapplication.multi.room2.CatEntity
 import io.github.openflocon.flocon.myapplication.multi.sharedpreferences.updateDatastoreAge

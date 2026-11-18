@@ -6,13 +6,9 @@ import android.os.Build
 
 // copied from flipper
 internal object NetUtils {
-    fun isRunningOnStockEmulator(): Boolean {
-        return Build.FINGERPRINT.contains("generic") && !Build.FINGERPRINT.contains("vbox")
-    }
+    fun isRunningOnStockEmulator(): Boolean = Build.FINGERPRINT.contains("generic") && !Build.FINGERPRINT.contains("vbox")
 
-    fun isRunningOnGenymotion(): Boolean {
-        return Build.FINGERPRINT.contains("vbox")
-    }
+    fun isRunningOnGenymotion(): Boolean = Build.FINGERPRINT.contains("vbox")
     fun getServerHost(context: Context): String {
         if (isRunningOnStockEmulator() && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             // adb reverse was added in lollipop, so before this

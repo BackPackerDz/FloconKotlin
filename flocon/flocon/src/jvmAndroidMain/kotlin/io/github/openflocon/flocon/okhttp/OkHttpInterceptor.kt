@@ -137,13 +137,15 @@ class FloconOkhttpInterceptor(
             }
 
             val isImage =
-                responseContentType?.toString()?.startsWith("image/") == true || (isImage?.invoke(
-                    FloconNetworkIsImageParams(
-                        request = request,
-                        response = response,
-                        responseContentType = responseContentType?.toString(),
+                responseContentType?.toString()?.startsWith("image/") == true || (
+                    isImage?.invoke(
+                        FloconNetworkIsImageParams(
+                            request = request,
+                            response = response,
+                            responseContentType = responseContentType?.toString(),
+                        )
+                    ) == true
                     )
-                ) == true)
 
             val requestHeadersMapUpToDate =
                 response.request.headers.toMultimap().mapValues { it.value.joinToString(",") }
@@ -201,5 +203,4 @@ class FloconOkhttpInterceptor(
             throw e
         }
     }
-
 }

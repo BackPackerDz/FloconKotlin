@@ -7,5 +7,4 @@ interface FloconDatabaseProvider {
     fun getAllDataBases(
         registeredDatabases: List<FloconDatabaseModel>
     ): List<FloconDatabaseModel>
-
 }

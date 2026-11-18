@@ -37,7 +37,6 @@ internal data class DeeplinkVariableRemote(
         @SerialName("auto_complete")
         data class AutoComplete(val suggestions: List<String>) : Mode
     }
-
 }
 
 @JsonClassDiscriminator("type")

@@ -28,7 +28,8 @@ internal class FloconDatabasePluginImpl(
     private val scope: CoroutineScope,
     override val providers: List<FloconDatabaseProvider>,
     private val encoder: FloconEncoder
-) : FloconPlugin, FloconDatabasePlugin {
+) : FloconPlugin,
+    FloconDatabasePlugin {
 
     override val key: String = Protocol.ToDevice.Database.Plugin
 
@@ -76,7 +77,7 @@ internal class FloconDatabasePluginImpl(
 
     private fun sendAllDatabases(sender: FloconMessageSender) {
         val databases = providers.flatMap { it.getAllDataBases(emptyList()) }
-        
+
         val updatedDatabases = registeredDatabases.updateAndGet { currentList ->
             val dbMap = currentList.associateBy { it.id }.toMutableMap()
             databases.forEach { db ->

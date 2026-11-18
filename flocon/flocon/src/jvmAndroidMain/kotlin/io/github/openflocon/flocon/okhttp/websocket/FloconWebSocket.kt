@@ -54,13 +54,16 @@ object FloconWebSocket {
         private var websocketRef: WeakReference<WebSocket>? = null
 
         init {
-            Flocon.networkPlugin.registerWebSocketMockListener(id = id, listener = object : FloconWebSocketMockListener {
-                override fun onMessage(message: String) {
-                    websocketRef?.get()?.let { websocket ->
-                        onMessage(websocket, message)
+            Flocon.networkPlugin.registerWebSocketMockListener(
+                id = id,
+                listener = object : FloconWebSocketMockListener {
+                    override fun onMessage(message: String) {
+                        websocketRef?.get()?.let { websocket ->
+                            onMessage(websocket, message)
+                        }
                     }
                 }
-            })
+            )
         }
 
         override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
@@ -124,13 +127,10 @@ object FloconWebSocket {
             listener.onOpen(webSocket, response)
             super.onOpen(webSocket, response)
         }
-
     }
 }
 
 fun WebSocket.sendWithFlocon(text: String) = FloconWebSocket.send(this, text)
 fun WebSocket.sendWithFlocon(bytes: ByteString) = FloconWebSocket.send(this, bytes)
 
-fun WebSocketListener.listenWithFlocon(id: String): WebSocketListener {
-    return FloconWebSocket.Listener(this, id = id)
-}
+fun WebSocketListener.listenWithFlocon(id: String): WebSocketListener = FloconWebSocket.Listener(this, id = id)

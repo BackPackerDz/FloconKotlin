@@ -6,7 +6,6 @@ import io.github.openflocon.flocon.core.decode
 import io.github.openflocon.flocon.core.encode
 import io.github.openflocon.flocon.network.core.model.MockNetworkResponse
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 
 @Serializable
 internal class MockNetworkResponseDataModel(
@@ -64,42 +63,36 @@ private fun MockNetworkResponseDataModel.mapResponseToDomain(): MockNetworkRespo
     }
 }
 
-internal fun MockNetworkResponse.toRemote(): MockNetworkResponseDataModel {
-    return MockNetworkResponseDataModel(
-        expectation = MockNetworkResponseDataModel.Expectation(
-            urlPattern = expectation.urlPattern,
-            method = expectation.method,
-        ),
-        response = mapResponseToRemote(),
+internal fun MockNetworkResponse.toRemote(): MockNetworkResponseDataModel = MockNetworkResponseDataModel(
+    expectation = MockNetworkResponseDataModel.Expectation(
+        urlPattern = expectation.urlPattern,
+        method = expectation.method,
+    ),
+    response = mapResponseToRemote(),
+)
+
+private fun MockNetworkResponse.mapResponseToRemote(): MockNetworkResponseDataModel.Response = when (val response = this.response) {
+    is MockNetworkResponse.Response.ErrorThrow -> MockNetworkResponseDataModel.Response(
+        errorException = response.classPath,
+        delay = response.delay,
+        body = null,
+        headers = null,
+        httpCode = null,
+        mediaType = null,
+    )
+
+    is MockNetworkResponse.Response.Body -> MockNetworkResponseDataModel.Response(
+        errorException = null,
+        delay = response.delay,
+        body = response.body,
+        headers = response.headers,
+        httpCode = response.httpCode,
+        mediaType = response.mediaType,
     )
 }
 
-private fun MockNetworkResponse.mapResponseToRemote(): MockNetworkResponseDataModel.Response {
-    return when (val response = this.response) {
-        is MockNetworkResponse.Response.ErrorThrow -> MockNetworkResponseDataModel.Response(
-            errorException = response.classPath,
-            delay = response.delay,
-            body = null,
-            headers = null,
-            httpCode = null,
-            mediaType = null,
-        )
+internal fun FloconEncoder.encodeMocks(mocks: List<MockNetworkResponse>): String = encode(mocks.map { it.toRemote() })
 
-        is MockNetworkResponse.Response.Body -> MockNetworkResponseDataModel.Response(
-            errorException = null,
-            delay = response.delay,
-            body = response.body,
-            headers = response.headers,
-            httpCode = response.httpCode,
-            mediaType = response.mediaType,
-        )
-    }
-}
-
-internal fun FloconEncoder.encodeMocks(mocks: List<MockNetworkResponse>): String =
-    encode(mocks.map { it.toRemote() })
-
-internal fun FloconEncoder.decodeMocks(json: String): List<MockNetworkResponse> =
-    decode<List<MockNetworkResponseDataModel>>(json)
-        .orEmpty()
-        .mapNotNull { it.toDomain() }
+internal fun FloconEncoder.decodeMocks(json: String): List<MockNetworkResponse> = decode<List<MockNetworkResponseDataModel>>(json)
+    .orEmpty()
+    .mapNotNull { it.toDomain() }

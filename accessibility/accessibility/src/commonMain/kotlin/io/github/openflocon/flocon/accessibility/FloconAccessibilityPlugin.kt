@@ -39,22 +39,21 @@ object FloconAccessibility : FloconPluginFactory<FloconAccessibilityConfig, Floc
         pluginConfig: FloconAccessibilityConfig,
         floconConfig: FloconConfig,
         encoder: FloconEncoder
-    ): FloconAccessibilityPlugin {
-        return FloconAccessibilityPluginImpl(
-            sender = floconConfig.client as FloconMessageSender,
-            encoder = encoder
-        )
-            .also {
-                FloconAccessibilityPluginImpl.plugin = it
-                it.startCapture(pluginConfig.context)
-            }
-    }
+    ): FloconAccessibilityPlugin = FloconAccessibilityPluginImpl(
+        sender = floconConfig.client as FloconMessageSender,
+        encoder = encoder
+    )
+        .also {
+            FloconAccessibilityPluginImpl.plugin = it
+            it.startCapture(pluginConfig.context)
+        }
 }
 
 internal class FloconAccessibilityPluginImpl(
     private val sender: FloconMessageSender,
     private val encoder: FloconEncoder
-) : FloconPlugin, FloconAccessibilityPlugin {
+) : FloconPlugin,
+    FloconAccessibilityPlugin {
     override val key: String
         get() = Protocol.ToDevice.Accessibility.Plugin
 
@@ -148,6 +147,7 @@ internal class FloconAccessibilityPluginImpl(
                 focusedBounds = event.bounds
                 sendFocusedNode(event.toFocusedNodeItem())
             }
+
             ACCESSIBILITY_FOCUS_CLEARED_TYPE -> {
                 focusedBounds = null
                 sendFocusedNode(AccessibilityFocusedNodeItem())

@@ -9,5 +9,3 @@ internal data class ToDeviceGetFilesMessage(
     val isConstantPath: Boolean, // true: the path is the id of a root folder
     val withFoldersSize: Boolean = false,
 )
-
-

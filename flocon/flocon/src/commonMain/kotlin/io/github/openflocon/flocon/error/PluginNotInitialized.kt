@@ -1,9 +1,9 @@
 package io.github.openflocon.flocon.error
 
 import io.github.openflocon.flocon.FloconLogger
+import io.github.openflocon.flocon.FloconPlugin
 import io.github.openflocon.flocon.FloconRuntime
 import io.github.openflocon.flocon.InternalFloconApi
-import io.github.openflocon.flocon.FloconPlugin
 
 /**
  * Used by the `Flocon.xxxPlugin` accessors when the plugin is not installed:

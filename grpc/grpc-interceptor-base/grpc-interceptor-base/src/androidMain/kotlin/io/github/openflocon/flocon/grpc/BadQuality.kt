@@ -35,7 +35,7 @@ internal fun failResponseIfNeeded(
                 is BadQualityConfig.Error.Type.ErrorThrow -> {
                     val error = t.generate()
                     if (error is IOException) {
-                        throw error //okhttp accepts only IOException
+                        throw error // okhttp accepts only IOException
                     } else if (error is Throwable) {
                         throw IOException(error)
                     }

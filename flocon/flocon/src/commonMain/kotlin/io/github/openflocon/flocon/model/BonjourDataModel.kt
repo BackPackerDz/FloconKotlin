@@ -37,13 +37,12 @@ internal const val FLOCON_SDK_NAME = "kotlin"
 internal fun List<FloconPlugin>.toBonjourBody(
     encoder: FloconEncoder,
     connectionType: FloconConnectionType,
-): String =
-    encoder.encode(
-        BonjourDataModel(
-            connectionType = connectionType,
-            sdk = FLOCON_SDK_NAME,
-            plugins = map { it.key.lowercase() }
-                .filter { it.isNotEmpty() }
-                .distinct(),
-        )
+): String = encoder.encode(
+    BonjourDataModel(
+        connectionType = connectionType,
+        sdk = FLOCON_SDK_NAME,
+        plugins = map { it.key.lowercase() }
+            .filter { it.isNotEmpty() }
+            .distinct(),
     )
+)

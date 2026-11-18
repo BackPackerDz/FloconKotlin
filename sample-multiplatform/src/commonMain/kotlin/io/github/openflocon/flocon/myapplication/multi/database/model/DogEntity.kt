@@ -11,4 +11,3 @@ data class DogEntity(
     val pictureUrl: String,
     val age: Int,
 )
-

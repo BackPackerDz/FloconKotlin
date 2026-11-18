@@ -7,12 +7,12 @@ import io.github.openflocon.flocon.FloconContext
 import io.github.openflocon.flocon.database.core.databasePlugin
 import io.github.openflocon.flocon.database.core.model.FloconDatabaseModel
 import io.github.openflocon.flocon.database.core.model.FloconFileDatabaseModel
+import kotlinx.cinterop.BooleanVar
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.alloc
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.ptr
 import kotlinx.cinterop.value
-import kotlinx.cinterop.BooleanVar
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSLibraryDirectory

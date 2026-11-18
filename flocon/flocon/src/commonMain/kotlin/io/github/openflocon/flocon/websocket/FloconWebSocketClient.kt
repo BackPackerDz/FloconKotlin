@@ -1,6 +1,6 @@
 package io.github.openflocon.flocon.websocket
 
-internal expect fun buildFloconWebSocketClient() : FloconWebSocketClient
+internal expect fun buildFloconWebSocketClient(): FloconWebSocketClient
 
 interface FloconWebSocketClient {
 
@@ -17,4 +17,3 @@ interface FloconWebSocketClient {
 
     suspend fun disconnect()
 }
-

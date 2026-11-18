@@ -21,9 +21,7 @@ internal class JavaIoFileDataSource(
 
     override fun isDirectory(path: String): Boolean = File(path).isDirectory
 
-    override fun getFile(path: String): FloconFile? {
-        return File(path).takeIf { it.isFile }?.let { floconFileOf(it) }
-    }
+    override fun getFile(path: String): FloconFile? = File(path).takeIf { it.isFile }?.let { floconFileOf(it) }
 
     override fun getFolderContent(
         path: String,
@@ -48,14 +46,14 @@ internal class JavaIoFileDataSource(
         }
     }
 
-    private fun getFolderSize(file: File, withFoldersSize: Boolean): Long {
-        return if (withFoldersSize) {
-            file.walk()
-                .onEnter { !it.isSymbolicLink() }
-                .filter { it.isFile }
-                .map { it.length() }
-                .sum()
-        } else 0L
+    private fun getFolderSize(file: File, withFoldersSize: Boolean): Long = if (withFoldersSize) {
+        file.walk()
+            .onEnter { !it.isSymbolicLink() }
+            .filter { it.isFile }
+            .map { it.length() }
+            .sum()
+    } else {
+        0L
     }
 
     override fun delete(path: String) {

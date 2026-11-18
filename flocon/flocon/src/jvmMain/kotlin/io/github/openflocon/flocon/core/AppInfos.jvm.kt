@@ -6,16 +6,13 @@ import java.net.NetworkInterface
 import java.net.SocketException
 import java.net.UnknownHostException
 
-
-internal actual fun getAppInfos(floconContext: FloconContext): AppInfos {
-    return AppInfos(
-        deviceId = getMacAddress(),
-        deviceName = getHostName(),
-        appName = floconContext.appName,
-        appPackageName = floconContext.packageName,
-        platform = "desktop",
-    )
-}
+internal actual fun getAppInfos(floconContext: FloconContext): AppInfos = AppInfos(
+    deviceId = getMacAddress(),
+    deviceName = getHostName(),
+    appName = floconContext.appName,
+    appPackageName = floconContext.packageName,
+    platform = "desktop",
+)
 
 private fun getHostName(): String {
     try {

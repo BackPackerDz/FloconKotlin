@@ -21,11 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.github.openflocon.flocon.myapplication.multi.ui.SampleFeatures
 import io.github.openflocon.flocon.myapplication.multi.ui.SampleScreen
-import io.github.openflocon.flocon.myapplication.multi.ui.components.CategoryIcon
 import io.github.openflocon.flocon.myapplication.multi.ui.components.Card
+import io.github.openflocon.flocon.myapplication.multi.ui.components.CategoryIcon
+import io.github.openflocon.flocon.myapplication.multi.ui.components.Pill
 import io.github.openflocon.flocon.myapplication.multi.ui.components.PlatformChips
 import io.github.openflocon.flocon.myapplication.multi.ui.components.PlatformSummary
-import io.github.openflocon.flocon.myapplication.multi.ui.components.Pill
 import io.github.openflocon.flocon.myapplication.multi.ui.components.SectionLabel
 import io.github.openflocon.flocon.myapplication.multi.ui.theme.SampleIcons
 import io.github.openflocon.flocon.myapplication.multi.ui.theme.SampleTheme

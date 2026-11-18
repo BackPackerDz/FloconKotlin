@@ -33,6 +33,9 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v5
 
+      - name: Check code style
+        run: ./gradlew ktlintCheck
+
       - name: Run tests and assemble
         # jvmTest: the plugins unit tests (KMP modules), test: the Android sample unit tests
         run: ./gradlew jvmTest test assemble

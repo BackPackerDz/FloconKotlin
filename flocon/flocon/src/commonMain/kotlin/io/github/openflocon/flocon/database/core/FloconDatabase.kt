@@ -14,21 +14,17 @@ object FloconDatabase : FloconPluginFactory<FloconDatabaseConfig, FloconDatabase
 
     override fun createEncoding(): FloconEncoding = FloconDatabaseEncoding()
 
-    override fun createConfig(context: FloconContext): FloconDatabaseConfig =
-        FloconDatabaseConfig(context)
+    override fun createConfig(context: FloconContext): FloconDatabaseConfig = FloconDatabaseConfig(context)
 
     override fun install(
         pluginConfig: FloconDatabaseConfig,
         floconConfig: FloconConfig,
         encoder: FloconEncoder
-    ): FloconDatabasePlugin {
-        return FloconDatabasePluginImpl(
-            sender = floconConfig.client as FloconMessageSender,
-            scope = floconConfig.scope,
-            providers = pluginConfig.providers,
-            encoder = encoder
-        )
-            .also { FloconDatabasePluginImpl.plugin = it }
-    }
-
+    ): FloconDatabasePlugin = FloconDatabasePluginImpl(
+        sender = floconConfig.client as FloconMessageSender,
+        scope = floconConfig.scope,
+        providers = pluginConfig.providers,
+        encoder = encoder
+    )
+        .also { FloconDatabasePluginImpl.plugin = it }
 }

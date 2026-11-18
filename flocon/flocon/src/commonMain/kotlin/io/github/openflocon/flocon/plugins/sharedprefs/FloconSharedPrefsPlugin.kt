@@ -38,14 +38,12 @@ object FloconPreferences : FloconPluginFactory<FloconPreferencesConfig, FloconPr
         pluginConfig: FloconPreferencesConfig,
         floconConfig: FloconConfig,
         encoder: FloconEncoder
-    ): FloconPreferencesPlugin {
-        return FloconSharedPrefsPluginImpl(
-            context = floconConfig.context,
-            sender = floconConfig.client as FloconMessageSender,
-            encoder = encoder,
-        )
-            .also { FloconSharedPrefsPluginImpl.plugin = it }
-    }
+    ): FloconPreferencesPlugin = FloconSharedPrefsPluginImpl(
+        context = floconConfig.context,
+        sender = floconConfig.client as FloconMessageSender,
+        encoder = encoder,
+    )
+        .also { FloconSharedPrefsPluginImpl.plugin = it }
 }
 
 internal interface FloconPreferencesDataSource {
@@ -58,7 +56,8 @@ internal class FloconSharedPrefsPluginImpl(
     context: FloconContext,
     private val sender: FloconMessageSender,
     private val encoder: FloconEncoder,
-) : FloconPlugin, FloconPreferencesPlugin {
+) : FloconPlugin,
+    FloconPreferencesPlugin {
     override val key: String = Protocol.ToDevice.SharedPreferences.Plugin
 
     private val dataSource = buildFloconPreferencesDataSource(context)
@@ -144,8 +143,11 @@ internal class FloconSharedPrefsPluginImpl(
 
     private fun registerInternal(preference: FloconPreference) {
         preferences.update { current ->
-            if (current.containsKey(preference.name)) current
-            else current + (preference.name to preference)
+            if (current.containsKey(preference.name)) {
+                current
+            } else {
+                current + (preference.name to preference)
+            }
         }
     }
 

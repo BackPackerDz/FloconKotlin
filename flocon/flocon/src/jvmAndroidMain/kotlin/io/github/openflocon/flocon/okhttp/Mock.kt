@@ -77,7 +77,7 @@ internal fun executeMock(
         is MockNetworkResponse.Response.ErrorThrow -> {
             val error = response.generate()
             if (error is IOException) {
-                throw error //okhttp accepts only IOException
+                throw error // okhttp accepts only IOException
             } else if (error is Throwable) {
                 throw IOException(error)
             } else {

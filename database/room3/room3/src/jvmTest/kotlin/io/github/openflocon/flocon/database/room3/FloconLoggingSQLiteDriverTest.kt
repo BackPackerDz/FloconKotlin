@@ -97,11 +97,21 @@ class FloconLoggingSQLiteDriverTest {
 
     private class FakeStatement : SQLiteStatement {
         val calls = mutableListOf<String>()
-        override fun bindBlob(index: Int, value: ByteArray) { calls += "bindBlob $index" }
-        override fun bindDouble(index: Int, value: Double) { calls += "bindDouble $index" }
-        override fun bindLong(index: Int, value: Long) { calls += "bindLong $index" }
-        override fun bindText(index: Int, value: String) { calls += "bindText $index" }
-        override fun bindNull(index: Int) { calls += "bindNull $index" }
+        override fun bindBlob(index: Int, value: ByteArray) {
+            calls += "bindBlob $index"
+        }
+        override fun bindDouble(index: Int, value: Double) {
+            calls += "bindDouble $index"
+        }
+        override fun bindLong(index: Int, value: Long) {
+            calls += "bindLong $index"
+        }
+        override fun bindText(index: Int, value: String) {
+            calls += "bindText $index"
+        }
+        override fun bindNull(index: Int) {
+            calls += "bindNull $index"
+        }
         override fun getBlob(index: Int): ByteArray = ByteArray(0)
         override fun getDouble(index: Int): Double = 0.0
         override fun getLong(index: Int): Long = 0
@@ -110,9 +120,16 @@ class FloconLoggingSQLiteDriverTest {
         override fun getColumnCount(): Int = 0
         override fun getColumnName(index: Int): String = ""
         override fun getColumnType(index: Int): Int = 0
-        override fun step(): Boolean { calls += "step"; return false }
-        override fun reset() { calls += "reset" }
-        override fun clearBindings() { calls += "clearBindings" }
+        override fun step(): Boolean {
+            calls += "step"
+            return false
+        }
+        override fun reset() {
+            calls += "reset"
+        }
+        override fun clearBindings() {
+            calls += "clearBindings"
+        }
         override fun close() = Unit
     }
 }

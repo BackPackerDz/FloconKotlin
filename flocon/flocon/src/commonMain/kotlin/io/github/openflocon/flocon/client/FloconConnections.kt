@@ -10,7 +10,6 @@ import io.github.openflocon.flocon.core.FloconEncoder
 import io.github.openflocon.flocon.model.FloconConnectionType
 import io.github.openflocon.flocon.model.toBonjourBody
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -152,5 +151,4 @@ internal class FloconConnections(
  * The host alone when it uses the configured ports, so the stored address follows a later port
  * change, otherwise `host:ws:http`.
  */
-private fun FloconServer.storedAddress(websocketPort: Int, httpPort: Int) =
-    if (port == websocketPort && this.httpPort == httpPort) host else "$host:$port:${this.httpPort}"
+private fun FloconServer.storedAddress(websocketPort: Int, httpPort: Int) = if (port == websocketPort && this.httpPort == httpPort) host else "$host:$port:${this.httpPort}"

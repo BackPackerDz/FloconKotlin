@@ -18,17 +18,15 @@ internal class AnalyticsPropertySerializable(
     val value: String,
 )
 
-internal fun AnalyticsItem.toRemote(): AnalyticsItemSerializable {
-    return AnalyticsItemSerializable(
-        id = id,
-        analyticsTableId = analyticsTableId,
-        eventName = eventName,
-        createdAt = createdAt,
-        properties = properties.map {
-            AnalyticsPropertySerializable(
-                name = it.name,
-                value = it.value
-            )
-        }
-    )
-}
+internal fun AnalyticsItem.toRemote(): AnalyticsItemSerializable = AnalyticsItemSerializable(
+    id = id,
+    analyticsTableId = analyticsTableId,
+    eventName = eventName,
+    createdAt = createdAt,
+    properties = properties.map {
+        AnalyticsPropertySerializable(
+            name = it.name,
+            value = it.value
+        )
+    }
+)

@@ -1,9 +1,9 @@
 package io.github.openflocon.flocon.myapplication.multi.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.mutableStateListOf
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import io.github.openflocon.flocon.myapplication.multi.ui.screens.AccessibilityScreen
@@ -60,8 +60,7 @@ val SampleScreen.route: SampleRoute
 
 /** The back stack of the sample, the first entry is always the home. */
 @Composable
-fun rememberSampleBackStack(): SnapshotStateList<SampleRoute> =
-    remember { mutableStateListOf(SampleRoute.Home) }
+fun rememberSampleBackStack(): SnapshotStateList<SampleRoute> = remember { mutableStateListOf(SampleRoute.Home) }
 
 /**
  * Navigation 3 host: handles the system back gesture, the transitions between screens and the

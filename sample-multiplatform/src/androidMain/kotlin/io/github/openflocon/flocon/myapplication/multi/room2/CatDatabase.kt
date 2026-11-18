@@ -46,20 +46,18 @@ abstract class CatDatabase : RoomDatabase() {
         @Volatile
         private var instance: CatDatabase? = null
 
-        fun get(context: Context): CatDatabase {
-            return instance ?: synchronized(this) {
-                instance ?: Room.databaseBuilder(
-                    context.applicationContext,
-                    CatDatabase::class.java,
-                    "cats_database",
-                )
-                    .floconLogs(id = "cats_room2")
-                    .build()
-                    .also {
-                        instance = it
-                        Flocon.databasePlugin.register(id = "cats_room2", displayName = "cats (Room 2)", database = it)
-                    }
-            }
+        fun get(context: Context): CatDatabase = instance ?: synchronized(this) {
+            instance ?: Room.databaseBuilder(
+                context.applicationContext,
+                CatDatabase::class.java,
+                "cats_database",
+            )
+                .floconLogs(id = "cats_room2")
+                .build()
+                .also {
+                    instance = it
+                    Flocon.databasePlugin.register(id = "cats_room2", displayName = "cats (Room 2)", database = it)
+                }
         }
     }
 }

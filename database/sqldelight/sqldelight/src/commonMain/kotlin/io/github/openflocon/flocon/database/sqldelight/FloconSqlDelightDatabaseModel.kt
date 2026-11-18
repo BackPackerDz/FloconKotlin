@@ -68,16 +68,14 @@ internal data class FloconSqlDelightDatabaseModel(
 }
 
 // always await: free on sync drivers, required on async ones (web)
-private suspend fun SqlDriver.run(sql: String): Long =
-    execute(null, sql, 0, null).await()
+private suspend fun SqlDriver.run(sql: String): Long = execute(null, sql, 0, null).await()
 
-private suspend fun SqlDriver.singleLong(sql: String): Long =
-    executeQuery(
-        identifier = null,
-        sql = sql,
-        mapper = { cursor -> QueryResult.Value(if (cursor.next().value) cursor.getLong(0) ?: 0L else 0L) },
-        parameters = 0,
-    ).await()
+private suspend fun SqlDriver.singleLong(sql: String): Long = executeQuery(
+    identifier = null,
+    sql = sql,
+    mapper = { cursor -> QueryResult.Value(if (cursor.next().value) cursor.getLong(0) ?: 0L else 0L) },
+    parameters = 0,
+).await()
 
 private suspend fun SqlDriver.select(query: String): DatabaseExecuteSqlResponse {
     val sql = query.trim().trimEnd(';')

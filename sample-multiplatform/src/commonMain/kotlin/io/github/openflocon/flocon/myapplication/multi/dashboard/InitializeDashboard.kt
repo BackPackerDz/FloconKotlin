@@ -5,17 +5,17 @@ import androidx.compose.ui.graphics.toArgb
 import io.github.openflocon.flocon.Flocon
 import io.github.openflocon.flocon.myapplication.multi.dashboard.tokens.tokensFlow
 import io.github.openflocon.flocon.myapplication.multi.dashboard.user.userFlow
-import io.github.openflocon.flocon.plugins.dashboard.dsl.button
-import io.github.openflocon.flocon.plugins.dashboard.dsl.checkBox
-import io.github.openflocon.flocon.plugins.dashboard.dsl.json
-import io.github.openflocon.flocon.plugins.dashboard.dsl.label
-import io.github.openflocon.flocon.plugins.dashboard.dsl.plainText
-import io.github.openflocon.flocon.plugins.dashboard.dsl.markdown
-import io.github.openflocon.flocon.plugins.dashboard.dsl.html
-import io.github.openflocon.flocon.plugins.dashboard.dsl.text
-import io.github.openflocon.flocon.plugins.dashboard.dsl.textField
 import io.github.openflocon.flocon.plugins.dashboard.dashboard
 import io.github.openflocon.flocon.plugins.dashboard.dashboardPlugin
+import io.github.openflocon.flocon.plugins.dashboard.dsl.button
+import io.github.openflocon.flocon.plugins.dashboard.dsl.checkBox
+import io.github.openflocon.flocon.plugins.dashboard.dsl.html
+import io.github.openflocon.flocon.plugins.dashboard.dsl.json
+import io.github.openflocon.flocon.plugins.dashboard.dsl.label
+import io.github.openflocon.flocon.plugins.dashboard.dsl.markdown
+import io.github.openflocon.flocon.plugins.dashboard.dsl.plainText
+import io.github.openflocon.flocon.plugins.dashboard.dsl.text
+import io.github.openflocon.flocon.plugins.dashboard.dsl.textField
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -42,7 +42,8 @@ fun initializeDashboard() {
                     value = user.fullName,
                     onSubmitted = { value ->
                         userFlow.update { it.copy(fullName = value) }
-                    })
+                    }
+                )
             }
             section(name = "Tokens", tokensFlow) { tokens ->
                 text(label = "accessToken", value = tokens.accessToken)
@@ -66,7 +67,8 @@ fun initializeDashboard() {
                     value = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget ullamcorper elit. Pellentesque turpis ex, cursus cursus urna sed, iaculis sagittis nisl. Curabitur vehicula nunc eu metus rhoncus placerat. Vivamus at placerat ligula. Morbi ullamcorper cursus tellus, vitae molestie lorem sollicitudin euismod. Sed ullamcorper, risus vitae facilisis tempor, elit leo accumsan purus, ut ultricies augue erat et justo. Duis efficitur mauris eu finibus tincidunt. Aenean magna libero, auctor quis turpis et, viverra porta lorem. Ut tempus odio sit amet vestibulum condimentum. Donec et augue quis arcu blandit sodales. In laoreet odio id turpis ultricies, eu ornare dui blandit. Morbi hendrerit velit turpis, eget ornare ex consequat id. Nullam rhoncus, libero et sollicitudin tristique, risus ipsum luctus neque, ultricies ullamcorper felis metus non turpis. Nullam sed accumsan sem, at fermentum tortor."
                 )
                 json(
-                    label = "json", value = """
+                    label = "json",
+                    value = """
                                 {
                                   "testData": {
                                     "name": "John Doe",

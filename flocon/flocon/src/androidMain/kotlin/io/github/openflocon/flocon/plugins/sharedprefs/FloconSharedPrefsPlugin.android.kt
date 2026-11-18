@@ -11,11 +11,7 @@ internal class FloconPreferencesDataSourceAndroid(
     private val context: Context,
 ) : FloconPreferencesDataSource {
 
-    override fun detectLocalPreferences(): List<FloconPreference> {
-        return SharedPreferencesFinder.buildDescriptorForAllPrefsFiles(context)
-    }
+    override fun detectLocalPreferences(): List<FloconPreference> = SharedPreferencesFinder.buildDescriptorForAllPrefsFiles(context)
 }
 
-internal actual fun buildFloconPreferencesDataSource(context: FloconContext): FloconPreferencesDataSource {
-    return FloconPreferencesDataSourceAndroid(context = context.context)
-}
+internal actual fun buildFloconPreferencesDataSource(context: FloconContext): FloconPreferencesDataSource = FloconPreferencesDataSourceAndroid(context = context.context)

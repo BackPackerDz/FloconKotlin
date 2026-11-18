@@ -16,6 +16,23 @@ plugins {
     alias(libs.plugins.buildconfig) apply false
 
     alias(libs.plugins.sqldelight) apply false
+
+    alias(libs.plugins.ktlint.gradle) apply false
+}
+
+subprojects {
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+
+    extensions.configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+        version.set(rootProject.libs.versions.ktlint.engine.get())
+        filter {
+            exclude { it.file.path.contains("/build/") }
+        }
+    }
+
+    dependencies {
+        add("ktlintRuleset", rootProject.libs.compose.rules.ktlint)
+    }
 }
 
 // Samples consume either the local Flocon modules (default) or the artifacts published on Maven,

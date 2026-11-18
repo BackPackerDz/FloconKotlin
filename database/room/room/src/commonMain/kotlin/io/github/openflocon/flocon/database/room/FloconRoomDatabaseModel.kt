@@ -30,70 +30,66 @@ internal data class FloconRoomDatabaseModel(
     val database: RoomDatabase
 ) : FloconDatabaseModel {
 
-    override suspend fun executeQuery(query: String): DatabaseExecuteResponse {
-        return try {
-            database.useReaderConnection { connection ->
-                val firstWordUpperCase = getFirstWord(query).uppercase()
+    override suspend fun executeQuery(query: String): DatabaseExecuteResponse = try {
+        database.useReaderConnection { connection ->
+            val firstWordUpperCase = getFirstWord(query).uppercase()
 
-                when (firstWordUpperCase) {
-                    "SELECT",
-                    "PRAGMA",
-                    "EXPLAIN" -> executeSelect(
-                        connection = connection,
-                        query = query
-                    )
+            when (firstWordUpperCase) {
+                "SELECT",
+                "PRAGMA",
+                "EXPLAIN" -> executeSelect(
+                    connection = connection,
+                    query = query
+                )
 
-                    "INSERT" -> executeInsert(
-                        connection = connection,
-                        query = query
-                    )
+                "INSERT" -> executeInsert(
+                    connection = connection,
+                    query = query
+                )
 
-                    "UPDATE",
-                    "DELETE" -> executeUpdateDelete(
-                        connection = connection,
-                        query = query
-                    )
+                "UPDATE",
+                "DELETE" -> executeUpdateDelete(
+                    connection = connection,
+                    query = query
+                )
 
-                    else -> executeRawQuery(
-                        connection = connection,
-                        query = query
-                    )
-                }
+                else -> executeRawQuery(
+                    connection = connection,
+                    query = query
+                )
             }
-        } catch (t: Throwable) {
-            DatabaseExecuteSqlResponse.Error(
-                message = t.message ?: "error on executeSQL",
-                originalSql = query,
-            )
         }
+    } catch (t: Throwable) {
+        DatabaseExecuteSqlResponse.Error(
+            message = t.message ?: "error on executeSQL",
+            originalSql = query,
+        )
     }
 }
 
 private suspend fun executeSelect(
     connection: Transactor,
     query: String,
-): DatabaseExecuteSqlResponse {
-    return connection.usePrepared(query) { statement ->
-        val columnNames = mutableListOf<String>()
-        val columnCount = statement.getColumnCount()
-        for (i in 0 until columnCount) {
-            columnNames.add(statement.getColumnName(i))
-        }
-
-        val rows = mutableListOf<List<String?>>()
-        while (statement.step()) {
-            val values = mutableListOf<String?>()
-            for (i in 0 until columnCount) {
-                values.add(if (statement.isNull(i)) null else statement.getText(i))
-            }
-            rows.add(values)
-        }
-
-        DatabaseExecuteSqlResponse.Select(
-            columns = columnNames,
-            values = rows
-        )
+): DatabaseExecuteSqlResponse = connection.usePrepared(query) { statement ->
+    val columnNames = mutableListOf<String>()
+    val columnCount = statement.getColumnCount()
+    for (i in 0 until columnCount) {
+        columnNames.add(statement.getColumnName(i))
     }
+
+    val rows = mutableListOf<List<String?>>()
+    while (statement.step()) {
+        val values = mutableListOf<String?>()
+        for (i in 0 until columnCount) {
+            values.add(if (statement.isNull(i)) null else statement.getText(i))
+        }
+        rows.add(values)
+    }
+
+    DatabaseExecuteSqlResponse.Select(
+        columns = columnNames,
+        values = rows
+    )
 }
 
 private suspend fun executeInsert(
@@ -101,7 +97,10 @@ private suspend fun executeInsert(
     query: String,
 ): DatabaseExecuteSqlResponse {
     connection.execSQL(query)
-    val id = connection.usePrepared("SELECT last_insert_rowid()") { it.step(); it.getLong(0) }
+    val id = connection.usePrepared("SELECT last_insert_rowid()") {
+        it.step()
+        it.getLong(0)
+    }
     return DatabaseExecuteSqlResponse.Insert(id)
 }
 
@@ -110,7 +109,10 @@ private suspend fun executeUpdateDelete(
     query: String,
 ): DatabaseExecuteSqlResponse {
     connection.execSQL(query)
-    val count = connection.usePrepared("SELECT changes()") { it.step(); it.getLong(0).toInt() }
+    val count = connection.usePrepared("SELECT changes()") {
+        it.step()
+        it.getLong(0).toInt()
+    }
     return DatabaseExecuteSqlResponse.UpdateDelete(count)
 }
 

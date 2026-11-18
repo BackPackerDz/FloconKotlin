@@ -82,9 +82,7 @@ class FloconConfiguration internal constructor(
         serializerModule += factory.createEncoding().serializersModule
     }
 
-    fun build(encoder: FloconEncoder): List<FloconPlugin> {
-        return plugins.values.map { it.invoke(config, encoder) }
-    }
+    fun build(encoder: FloconEncoder): List<FloconPlugin> = plugins.values.map { it.invoke(config, encoder) }
 
     fun encoding() = serializerModule
 

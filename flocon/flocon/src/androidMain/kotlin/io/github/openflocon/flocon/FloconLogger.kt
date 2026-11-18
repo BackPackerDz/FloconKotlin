@@ -7,13 +7,13 @@ actual object FloconLogger {
     private const val TAG = "FloconLogger"
 
     actual fun logError(text: String, throwable: Throwable?) {
-        if(enabled) {
+        if (enabled) {
             Log.e(TAG, text, throwable)
         }
     }
 
     actual fun log(text: String) {
-        if(enabled) {
+        if (enabled) {
             Log.d(TAG, text)
         }
     }

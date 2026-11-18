@@ -29,31 +29,29 @@ internal class BadQualityConfigSerializable(
     )
 }
 
-internal fun BadQualityConfig.toSerializable(): BadQualityConfigSerializable {
-    return BadQualityConfigSerializable(
-        latency = BadQualityConfigSerializable.LatencySerializable(
-            latencyTriggerProbability = latency.latencyTriggerProbability,
-            minLatencyMs = latency.minLatencyMs,
-            maxLatencyMs = latency.maxLatencyMs
-        ),
-        errorProbability = errorProbability,
-        errors = errors.map { error ->
-            when (val t = error.type) {
-                is BadQualityConfig.Error.Type.Body -> BadQualityConfigSerializable.ErrorSerializable(
-                    weight = error.weight,
-                    errorCode = t.errorCode,
-                    errorBody = t.errorBody,
-                    errorContentType = t.errorContentType
-                )
+internal fun BadQualityConfig.toSerializable(): BadQualityConfigSerializable = BadQualityConfigSerializable(
+    latency = BadQualityConfigSerializable.LatencySerializable(
+        latencyTriggerProbability = latency.latencyTriggerProbability,
+        minLatencyMs = latency.minLatencyMs,
+        maxLatencyMs = latency.maxLatencyMs
+    ),
+    errorProbability = errorProbability,
+    errors = errors.map { error ->
+        when (val t = error.type) {
+            is BadQualityConfig.Error.Type.Body -> BadQualityConfigSerializable.ErrorSerializable(
+                weight = error.weight,
+                errorCode = t.errorCode,
+                errorBody = t.errorBody,
+                errorContentType = t.errorContentType
+            )
 
-                is BadQualityConfig.Error.Type.ErrorThrow -> BadQualityConfigSerializable.ErrorSerializable(
-                    weight = error.weight,
-                    errorException = t.classPath
-                )
-            }
+            is BadQualityConfig.Error.Type.ErrorThrow -> BadQualityConfigSerializable.ErrorSerializable(
+                weight = error.weight,
+                errorException = t.classPath
+            )
         }
-    )
-}
+    }
+)
 
 internal fun BadQualityConfigSerializable.toDomain(): BadQualityConfig {
     val latencyConfig = BadQualityConfig.LatencyConfig(
@@ -85,8 +83,6 @@ internal fun BadQualityConfigSerializable.toDomain(): BadQualityConfig {
     )
 }
 
-internal fun FloconEncoder.encodeBadQualityConfig(config: BadQualityConfig): String =
-    encode(config.toSerializable())
+internal fun FloconEncoder.encodeBadQualityConfig(config: BadQualityConfig): String = encode(config.toSerializable())
 
-internal fun FloconEncoder.decodeBadQualityConfig(json: String): BadQualityConfig? =
-    decode<BadQualityConfigSerializable>(json)?.toDomain()
+internal fun FloconEncoder.decodeBadQualityConfig(json: String): BadQualityConfig? = decode<BadQualityConfigSerializable>(json)?.toDomain()

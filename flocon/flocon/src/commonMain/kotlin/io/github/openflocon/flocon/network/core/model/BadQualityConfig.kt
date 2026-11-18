@@ -13,15 +13,11 @@ data class BadQualityConfig(
         val minLatencyMs: Long,
         val maxLatencyMs: Long,
     ) {
-        fun shouldSimulateLatency(): Boolean {
-            return latencyTriggerProbability > 0f && (latencyTriggerProbability == 1f || Random.nextDouble() < latencyTriggerProbability)
-        }
-        fun getRandomLatency() : Long {
-            return Random.nextLong(
-                minLatencyMs,
-                maxLatencyMs + 1
-            )
-        }
+        fun shouldSimulateLatency(): Boolean = latencyTriggerProbability > 0f && (latencyTriggerProbability == 1f || Random.nextDouble() < latencyTriggerProbability)
+        fun getRandomLatency(): Long = Random.nextLong(
+            minLatencyMs,
+            maxLatencyMs + 1
+        )
     }
     class Error(
         val weight: Float, // increase the probability of being triggered vs all others errors
@@ -36,21 +32,17 @@ data class BadQualityConfig(
             data class ErrorThrow(
                 val classPath: String,
             ) : Type {
-                fun generate() : Throwable? {
-                    return try {
-                        io.github.openflocon.flocon.utils.createThrowableFromClassName(classPath)
-                    } catch (t: Throwable) {
-                        FloconLogger.logError("BadQualityConfig error, className not found", t)
-                        null
-                    }
+                fun generate(): Throwable? = try {
+                    io.github.openflocon.flocon.utils.createThrowableFromClassName(classPath)
+                } catch (t: Throwable) {
+                    FloconLogger.logError("BadQualityConfig error, className not found", t)
+                    null
                 }
             }
         }
     }
 
-    fun shouldFail(): Boolean {
-        return errorProbability > 0 && Random.nextDouble() < errorProbability
-    }
+    fun shouldFail(): Boolean = errorProbability > 0 && Random.nextDouble() < errorProbability
 
     fun selectRandomError(): BadQualityConfig.Error? {
         if (errors.isEmpty()) {

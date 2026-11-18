@@ -24,16 +24,18 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.serialization.modules.EmptySerializersModule
 import kotlin.concurrent.Volatile
 import kotlin.concurrent.atomics.AtomicInt
 import kotlin.concurrent.atomics.ExperimentalAtomicApi
-import kotlinx.serialization.modules.EmptySerializersModule
 
 @OptIn(ExperimentalAtomicApi::class)
 class FloconClient internal constructor(
     private val context: FloconContext,
     private val scope: CoroutineScope,
-) : FloconApp.Client, FloconMessageSender, FloconFileSender {
+) : FloconApp.Client,
+    FloconMessageSender,
+    FloconFileSender {
 
     private val appInstance by lazy { currentTimeMillis() }
     private val appInfos by lazy { getAppInfos(context) }
@@ -111,9 +113,13 @@ class FloconClient internal constructor(
                             outbox.enqueue(message)
                         }
                     }
+
                     is OutboxItem.Connected -> outbox.connected(item.link.outboxLink, handshake = encode("bonjour", "bonjour", item.handshakeBody))
+
                     is OutboxItem.Disconnected -> outbox.disconnected(item.link.outboxLink)
+
                     is OutboxItem.AddLink -> outbox.add(item.link.outboxLink)
+
                     is OutboxItem.RemoveLink -> outbox.remove(item.link.outboxLink)
                 }
             }
@@ -121,9 +127,7 @@ class FloconClient internal constructor(
     }
 
     /** Adds a connection to [server], next to the default one. It replaces the previous extra one. */
-    internal fun addExtraLink(server: FloconServer): FloconLink {
-        return newLink(server).also { extraLink = it }
-    }
+    internal fun addExtraLink(server: FloconServer): FloconLink = newLink(server).also { extraLink = it }
 
     /** Closes and forgets [link], which must be the extra one. */
     internal suspend fun removeExtraLink(link: FloconLink) {
@@ -252,6 +256,7 @@ class FloconClient internal constructor(
     /** The messages kept while disconnected are sent by [onConnected], nothing to do here. */
     override fun sendPendingMessages() = Unit
 }
+
 /**
  * The connection to one address of the desktop app, with its own websocket.
  *
@@ -276,6 +281,5 @@ internal class FloconLink(val server: FloconServer) {
 internal const val LARGE_MESSAGE_THRESHOLD_BYTES = 5 * 1024 * 1024
 
 /** A char is at most 3 bytes in UTF-8 (BMP), so the exact size is only computed for big strings. */
-internal fun isTooLargeForWebSocket(message: String): Boolean =
-    message.length.toLong() * 3 > LARGE_MESSAGE_THRESHOLD_BYTES &&
-        message.encodeToByteArray().size > LARGE_MESSAGE_THRESHOLD_BYTES
+internal fun isTooLargeForWebSocket(message: String): Boolean = message.length.toLong() * 3 > LARGE_MESSAGE_THRESHOLD_BYTES &&
+    message.encodeToByteArray().size > LARGE_MESSAGE_THRESHOLD_BYTES

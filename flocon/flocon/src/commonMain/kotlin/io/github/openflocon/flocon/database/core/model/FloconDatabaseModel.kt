@@ -8,7 +8,6 @@ interface FloconDatabaseModel {
     val displayName: String
 
     suspend fun executeQuery(query: String): DatabaseExecuteResponse
-
 }
 
 data class FloconFileDatabaseModel(
@@ -17,10 +16,7 @@ data class FloconFileDatabaseModel(
     val absolutePath: String
 ) : FloconDatabaseModel {
 
-    override suspend fun executeQuery(query: String): DatabaseExecuteResponse {
-        return openDbAndExecuteQuery(absolutePath, query)
-    }
-
+    override suspend fun executeQuery(query: String): DatabaseExecuteResponse = openDbAndExecuteQuery(absolutePath, query)
 }
 
 internal expect fun openDbAndExecuteQuery(

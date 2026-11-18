@@ -7,12 +7,12 @@ import platform.Foundation.NSUUID
 import platform.Foundation.NSUserDefaults
 import platform.UIKit.UIDevice
 
-private fun getDeviceId() : String {
+private fun getDeviceId(): String {
     val settings = NSUserDefaultsSettings(
         NSUserDefaults.standardUserDefaults()
     )
     val id = settings.getStringOrNull("deviceId")
-    return if(id != null) {
+    return if (id != null) {
         id
     } else {
         val newId = NSUUID.UUID().UUIDString()

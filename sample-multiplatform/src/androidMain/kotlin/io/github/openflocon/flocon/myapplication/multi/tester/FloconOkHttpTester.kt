@@ -38,7 +38,6 @@ object FloconOkHttpTester {
                         call: Call,
                         e: IOException
                     ) {
-
                     }
 
                     override fun onResponse(
@@ -47,7 +46,6 @@ object FloconOkHttpTester {
                     ) {
                         Log.d("NET_NET", response.body.string() ?: "")
                     }
-
                 })
                 Log.d("NET_NET", "success")
             } catch (t: Throwable) {
@@ -69,7 +67,6 @@ object FloconOkHttpTester {
                         call: Call,
                         e: IOException
                     ) {
-
                     }
 
                     override fun onResponse(
@@ -78,7 +75,6 @@ object FloconOkHttpTester {
                     ) {
                         Log.d("NET_NET", response.body.string() ?: "")
                     }
-
                 })
                 Log.d("NET_NET", "success")
             } catch (t: Throwable) {
@@ -86,5 +82,4 @@ object FloconOkHttpTester {
             }
         }
     }
-
 }

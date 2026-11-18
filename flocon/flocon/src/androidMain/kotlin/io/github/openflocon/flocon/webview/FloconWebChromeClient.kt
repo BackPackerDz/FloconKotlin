@@ -60,19 +60,16 @@ class FloconWebChromeClient(
         delegate?.onReceivedIcon(view, icon) ?: super.onReceivedIcon(view, icon)
     }
 
-    override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean =
-        delegate?.onCreateWindow(view, isDialog, isUserGesture, resultMsg)
-            ?: super.onCreateWindow(view, isDialog, isUserGesture, resultMsg)
+    override fun onCreateWindow(view: WebView?, isDialog: Boolean, isUserGesture: Boolean, resultMsg: Message?): Boolean = delegate?.onCreateWindow(view, isDialog, isUserGesture, resultMsg)
+        ?: super.onCreateWindow(view, isDialog, isUserGesture, resultMsg)
 
     override fun onCloseWindow(window: WebView?) {
         delegate?.onCloseWindow(window) ?: super.onCloseWindow(window)
     }
 
-    override fun onJsAlert(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean =
-        delegate?.onJsAlert(view, url, message, result) ?: super.onJsAlert(view, url, message, result)
+    override fun onJsAlert(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean = delegate?.onJsAlert(view, url, message, result) ?: super.onJsAlert(view, url, message, result)
 
-    override fun onJsConfirm(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean =
-        delegate?.onJsConfirm(view, url, message, result) ?: super.onJsConfirm(view, url, message, result)
+    override fun onJsConfirm(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean = delegate?.onJsConfirm(view, url, message, result) ?: super.onJsConfirm(view, url, message, result)
 
     override fun onJsPrompt(
         view: WebView?,
@@ -80,9 +77,8 @@ class FloconWebChromeClient(
         message: String?,
         defaultValue: String?,
         result: JsPromptResult?,
-    ): Boolean =
-        delegate?.onJsPrompt(view, url, message, defaultValue, result)
-            ?: super.onJsPrompt(view, url, message, defaultValue, result)
+    ): Boolean = delegate?.onJsPrompt(view, url, message, defaultValue, result)
+        ?: super.onJsPrompt(view, url, message, defaultValue, result)
 
     override fun onPermissionRequest(request: PermissionRequest?) {
         delegate?.onPermissionRequest(request) ?: super.onPermissionRequest(request)
@@ -113,7 +109,6 @@ class FloconWebChromeClient(
         webView: WebView?,
         filePathCallback: ValueCallback<Array<Uri>>?,
         fileChooserParams: FileChooserParams?,
-    ): Boolean =
-        delegate?.onShowFileChooser(webView, filePathCallback, fileChooserParams)
-            ?: super.onShowFileChooser(webView, filePathCallback, fileChooserParams)
+    ): Boolean = delegate?.onShowFileChooser(webView, filePathCallback, fileChooserParams)
+        ?: super.onShowFileChooser(webView, filePathCallback, fileChooserParams)
 }

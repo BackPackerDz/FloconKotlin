@@ -9,5 +9,4 @@ class FloconDatabaseConfig(
 ) : FloconPluginConfig {
 
     val providers: MutableList<FloconDatabaseProvider> = mutableListOf()
-
 }

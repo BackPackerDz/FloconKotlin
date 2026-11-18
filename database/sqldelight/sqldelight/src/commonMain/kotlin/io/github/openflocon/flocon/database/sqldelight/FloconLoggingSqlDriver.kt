@@ -73,6 +73,7 @@ internal class FloconLoggingSqlDriver(
         }
         return when (result) {
             is QueryResult.Value -> result.also { logSafely(sql, recorder) }
+
             is QueryResult.AsyncValue -> QueryResult.AsyncValue {
                 try {
                     result.await()
@@ -98,14 +99,13 @@ private class BindRecorder {
 
     fun args(): List<Any?> = bound.entries.sortedBy { it.key }.map { it.value }
 
-    fun wrap(binders: (SqlPreparedStatement.() -> Unit)?): (SqlPreparedStatement.() -> Unit)? =
-        binders?.let { original ->
-            {
-                // a driver can run the binders more than once (retry): keep the last values
-                bound.clear()
-                original(RecordingStatement(this, bound))
-            }
+    fun wrap(binders: (SqlPreparedStatement.() -> Unit)?): (SqlPreparedStatement.() -> Unit)? = binders?.let { original ->
+        {
+            // a driver can run the binders more than once (retry): keep the last values
+            bound.clear()
+            original(RecordingStatement(this, bound))
         }
+    }
 }
 
 private class RecordingStatement(

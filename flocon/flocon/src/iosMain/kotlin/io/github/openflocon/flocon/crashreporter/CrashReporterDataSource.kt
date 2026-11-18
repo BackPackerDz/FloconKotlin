@@ -13,8 +13,8 @@ import platform.Foundation.NSFileManager
 import platform.Foundation.NSSearchPathForDirectoriesInDomains
 import platform.Foundation.NSString
 import platform.Foundation.NSUTF8StringEncoding
-import platform.Foundation.create
 import platform.Foundation.NSUserDomainMask
+import platform.Foundation.create
 import platform.Foundation.stringWithContentsOfFile
 import platform.Foundation.writeToFile
 import kotlin.experimental.ExperimentalNativeApi
@@ -46,25 +46,23 @@ private class FloconCrashReporterDataSourceIos : FloconCrashReporterDataSource {
         }
     }
 
-    override fun loadPendingCrashes(): List<CrashReportDataModel> {
-        return try {
-            fileManager.contentsOfDirectoryAtPath(crashesDir, error = null)
-                ?.mapNotNull { it as? String }
-                ?.filter { it.endsWith(".json") }
-                ?.mapNotNull { name ->
-                    try {
-                        NSString.stringWithContentsOfFile("$crashesDir/$name", NSUTF8StringEncoding, null)
-                            ?.let { crashReportFromJson(it) }
-                    } catch (t: Throwable) {
-                        FloconLogger.logError("Error reading crash $name", t)
-                        null
-                    }
+    override fun loadPendingCrashes(): List<CrashReportDataModel> = try {
+        fileManager.contentsOfDirectoryAtPath(crashesDir, error = null)
+            ?.mapNotNull { it as? String }
+            ?.filter { it.endsWith(".json") }
+            ?.mapNotNull { name ->
+                try {
+                    NSString.stringWithContentsOfFile("$crashesDir/$name", NSUTF8StringEncoding, null)
+                        ?.let { crashReportFromJson(it) }
+                } catch (t: Throwable) {
+                    FloconLogger.logError("Error reading crash $name", t)
+                    null
                 }
-                ?: emptyList()
-        } catch (t: Throwable) {
-            FloconLogger.logError("Error loading pending crashes", t)
-            emptyList()
-        }
+            }
+            ?: emptyList()
+    } catch (t: Throwable) {
+        FloconLogger.logError("Error loading pending crashes", t)
+        emptyList()
     }
 
     override fun deleteCrash(crashId: String) {
@@ -76,9 +74,7 @@ private class FloconCrashReporterDataSourceIos : FloconCrashReporterDataSource {
     }
 }
 
-internal actual fun buildFloconCrashReporterDataSource(context: FloconContext): FloconCrashReporterDataSource {
-    return FloconCrashReporterDataSourceIos()
-}
+internal actual fun buildFloconCrashReporterDataSource(context: FloconContext): FloconCrashReporterDataSource = FloconCrashReporterDataSourceIos()
 
 internal actual fun setupUncaughtExceptionHandler(
     context: FloconContext,

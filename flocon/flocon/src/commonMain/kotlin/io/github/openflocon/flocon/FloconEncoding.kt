@@ -6,7 +6,6 @@ import kotlinx.serialization.modules.SerializersModule
 interface FloconEncoding {
 
     val serializersModule: SerializersModule
-
 }
 
 internal class DefaultEncoding : FloconEncoding {

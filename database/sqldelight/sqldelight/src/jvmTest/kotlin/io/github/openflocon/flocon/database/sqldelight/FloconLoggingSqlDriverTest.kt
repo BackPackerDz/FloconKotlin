@@ -17,14 +17,12 @@ class FloconLoggingSqlDriverTest {
     private val logs = mutableListOf<Log>()
     private val jdbc = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
 
-    private fun logging(delegate: SqlDriver = jdbc, failingLogger: Boolean = false) =
-        FloconLoggingSqlDriver(delegate) { sql, args ->
-            if (failingLogger) error("logger down")
-            logs += Log(sql, args)
-        }
+    private fun logging(delegate: SqlDriver = jdbc, failingLogger: Boolean = false) = FloconLoggingSqlDriver(delegate) { sql, args ->
+        if (failingLogger) error("logger down")
+        logs += Log(sql, args)
+    }
 
-    private fun SqlDriver.run(sql: String, binders: (SqlPreparedStatement.() -> Unit)? = null) =
-        runBlocking { execute(null, sql, 0, binders).await() }
+    private fun SqlDriver.run(sql: String, binders: (SqlPreparedStatement.() -> Unit)? = null) = runBlocking { execute(null, sql, 0, binders).await() }
 
     private fun SqlDriver.dogNames(binders: SqlPreparedStatement.() -> Unit) = runBlocking {
         executeQuery(null, "SELECT name FROM dog WHERE age > ?", { c: SqlCursor ->
@@ -85,7 +83,10 @@ class FloconLoggingSqlDriverTest {
         var resolved = false
         val async = object : SqlDriver by jdbc {
             override fun execute(
-                identifier: Int?, sql: String, parameters: Int, binders: (SqlPreparedStatement.() -> Unit)?,
+                identifier: Int?,
+                sql: String,
+                parameters: Int,
+                binders: (SqlPreparedStatement.() -> Unit)?,
             ): QueryResult<Long> = QueryResult.AsyncValue {
                 resolved = true
                 jdbc.execute(identifier, sql, parameters, binders).value

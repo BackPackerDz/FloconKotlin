@@ -9,4 +9,3 @@ data class HumanEntity(
     val firstName: String,
     val name: String,
 )
-

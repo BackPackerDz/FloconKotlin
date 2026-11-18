@@ -51,16 +51,13 @@ object FloconNetwork : FloconPluginFactory<FloconNetworkConfig, FloconNetworkPlu
         pluginConfig: FloconNetworkConfig,
         floconConfig: FloconConfig,
         encoder: FloconEncoder
-    ): FloconNetworkPlugin {
-        return FloconNetworkPluginImpl(
-            context = floconConfig.context,
-            sender = floconConfig.client as FloconMessageSender,
-            coroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
-            encoder = encoder
-        )
-            .also { FloconNetworkPluginImpl.plugin = it }
-    }
-
+    ): FloconNetworkPlugin = FloconNetworkPluginImpl(
+        context = floconConfig.context,
+        sender = floconConfig.client as FloconMessageSender,
+        coroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
+        encoder = encoder
+    )
+        .also { FloconNetworkPluginImpl.plugin = it }
 }
 
 val Flocon.Companion.networkPlugin: FloconNetworkPlugin

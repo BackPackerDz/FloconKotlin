@@ -21,25 +21,22 @@ internal actual class FloconRoomDatabaseProviderImpl actual constructor(
         databases.forEach { Flocon.databasePlugin.register(it) }
     }
 
-    actual override fun getAllDataBases(registeredDatabases: List<FloconDatabaseModel>): List<FloconDatabaseModel> {
-        return paths
-            .flatMap { File(it).walkTopDown().maxDepth(MAX_DEPTH).toList() }
-            .filter { it.isFile && isDatabaseFile(it.name) }
-            .distinctBy { it.absolutePath }
-            .map {
-                FloconFileDatabaseModel(
-                    id = it.absolutePath,
-                    displayName = it.name,
-                    absolutePath = it.absolutePath,
-                )
-            }
-    }
+    actual override fun getAllDataBases(registeredDatabases: List<FloconDatabaseModel>): List<FloconDatabaseModel> = paths
+        .flatMap { File(it).walkTopDown().maxDepth(MAX_DEPTH).toList() }
+        .filter { it.isFile && isDatabaseFile(it.name) }
+        .distinctBy { it.absolutePath }
+        .map {
+            FloconFileDatabaseModel(
+                id = it.absolutePath,
+                displayName = it.name,
+                absolutePath = it.absolutePath,
+            )
+        }
 
     companion object {
         private const val MAX_DEPTH = 7
 
-        internal fun isDatabaseFile(name: String): Boolean =
-            DATABASE_EXTENSIONS.any { name.endsWith(it) }
+        internal fun isDatabaseFile(name: String): Boolean = DATABASE_EXTENSIONS.any { name.endsWith(it) }
 
         private val DATABASE_EXTENSIONS = listOf(".db", ".sqlite", ".sqlite3")
     }

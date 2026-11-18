@@ -10,22 +10,18 @@ import io.github.openflocon.flocon.FloconDeviceSerial
 import io.github.openflocon.flocon.FloconLogger
 import java.io.ByteArrayOutputStream
 
-internal actual fun getAppIconBase64(context: FloconContext): String? {
-    return getAppIconBase64(context.context)
-}
+internal actual fun getAppIconBase64(context: FloconContext): String? = getAppIconBase64(context.context)
 
-private fun getAppIconBase64(context: Context): String? {
-    return try {
-        val bitmap = getAppIcon(context)
-        val resizedBitmap = resizeAppIcon(bitmap, maxSize = 300)
-        encodeToBase64(resizedBitmap)
-    } catch (t: Throwable) {
-        FloconLogger.logError(
-            text = "Error while getting app icon",
-            throwable = t,
-        )
-        null
-    }
+private fun getAppIconBase64(context: Context): String? = try {
+    val bitmap = getAppIcon(context)
+    val resizedBitmap = resizeAppIcon(bitmap, maxSize = 300)
+    encodeToBase64(resizedBitmap)
+} catch (t: Throwable) {
+    FloconLogger.logError(
+        text = "Error while getting app icon",
+        throwable = t,
+    )
+    null
 }
 
 private fun getAppIcon(context: Context): Bitmap {

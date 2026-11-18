@@ -65,5 +65,4 @@ class DummyWebsocketCaller(val client: OkHttpClient) {
     fun send(text: String) {
         ws?.sendWithFlocon("\"$text\"")
     }
-
 }

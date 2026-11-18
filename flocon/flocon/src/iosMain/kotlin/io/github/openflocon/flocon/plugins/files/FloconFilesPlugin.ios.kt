@@ -29,9 +29,7 @@ import platform.Foundation.NSURL
 import platform.Foundation.NSUserDomainMask
 import platform.Foundation.timeIntervalSince1970
 
-internal actual fun fileDataSource(context: FloconContext): FileDataSource {
-    return FileDataSourceIOs()
-}
+internal actual fun fileDataSource(context: FloconContext): FileDataSource = FileDataSourceIOs()
 
 @OptIn(ExperimentalForeignApi::class)
 internal class FileDataSourceIOs : FileDataSource {
@@ -48,13 +46,9 @@ internal class FileDataSourceIOs : FileDataSource {
         FileRootDataModel(id = "container", name = "App container", path = NSHomeDirectory()),
     )
 
-    private fun searchPathDirectory(directory: NSSearchPathDirectory): String? {
-        return NSSearchPathForDirectoriesInDomains(directory, NSUserDomainMask, true).firstOrNull() as? String
-    }
+    private fun searchPathDirectory(directory: NSSearchPathDirectory): String? = NSSearchPathForDirectoriesInDomains(directory, NSUserDomainMask, true).firstOrNull() as? String
 
-    override fun canonicalPath(path: String): String {
-        return NSURL.fileURLWithPath(path).URLByResolvingSymlinksInPath?.path ?: path
-    }
+    override fun canonicalPath(path: String): String = NSURL.fileURLWithPath(path).URLByResolvingSymlinksInPath?.path ?: path
 
     override fun isDirectory(path: String): Boolean = memScoped {
         val isDirectory = alloc<BooleanVar>()

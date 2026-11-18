@@ -7,7 +7,6 @@ import platform.Foundation.NSURLAuthenticationMethodServerTrust
 import platform.Foundation.NSURLCredential
 import platform.Foundation.NSURLSessionAuthChallengePerformDefaultHandling
 import platform.Foundation.NSURLSessionAuthChallengeUseCredential
-import platform.Foundation.create
 import platform.Foundation.credentialForTrust
 import platform.Foundation.serverTrust
 

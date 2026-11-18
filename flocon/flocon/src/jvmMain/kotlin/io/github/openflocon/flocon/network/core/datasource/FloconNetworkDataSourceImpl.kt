@@ -2,14 +2,14 @@ package io.github.openflocon.flocon.network.core.datasource
 
 import io.github.openflocon.flocon.FloconLogger
 import io.github.openflocon.flocon.core.FloconEncoder
-import io.github.openflocon.flocon.network.core.plugin.FLOCON_NETWORK_BAD_CONFIG_JSON
-import io.github.openflocon.flocon.network.core.plugin.FLOCON_NETWORK_MOCKS_JSON
 import io.github.openflocon.flocon.network.core.mapper.decodeBadQualityConfig
 import io.github.openflocon.flocon.network.core.mapper.decodeMocks
 import io.github.openflocon.flocon.network.core.mapper.encodeBadQualityConfig
 import io.github.openflocon.flocon.network.core.mapper.encodeMocks
 import io.github.openflocon.flocon.network.core.model.BadQualityConfig
 import io.github.openflocon.flocon.network.core.model.MockNetworkResponse
+import io.github.openflocon.flocon.network.core.plugin.FLOCON_NETWORK_BAD_CONFIG_JSON
+import io.github.openflocon.flocon.network.core.plugin.FLOCON_NETWORK_MOCKS_JSON
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream

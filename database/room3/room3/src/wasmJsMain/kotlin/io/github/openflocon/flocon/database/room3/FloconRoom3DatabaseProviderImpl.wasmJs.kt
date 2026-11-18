@@ -11,7 +11,5 @@ internal actual class FloconRoom3DatabaseProviderImpl actual constructor(
     actual override fun register() {
     }
 
-    actual override fun getAllDataBases(registeredDatabases: List<FloconDatabaseModel>): List<FloconDatabaseModel> {
-        return emptyList()
-    }
+    actual override fun getAllDataBases(registeredDatabases: List<FloconDatabaseModel>): List<FloconDatabaseModel> = emptyList()
 }
