@@ -7,11 +7,9 @@ import io.github.openflocon.flocon.plugins.sharedprefs.model.FloconPreferenceVal
 import platform.Foundation.NSUserDefaults
 
 // the app UserDefaults are exposed as one preference, others can be added with FloconPreferencesPlugin.register
-internal actual fun buildFloconPreferencesDataSource(context: FloconContext): FloconPreferencesDataSource =
-    object : FloconPreferencesDataSource {
-        override fun detectLocalPreferences(): List<FloconPreference> =
-            listOf(UserDefaultsPreference(NSUserDefaults.standardUserDefaults))
-    }
+internal actual fun buildFloconPreferencesDataSource(context: FloconContext): FloconPreferencesDataSource = object : FloconPreferencesDataSource {
+    override fun detectLocalPreferences(): List<FloconPreference> = listOf(UserDefaultsPreference(NSUserDefaults.standardUserDefaults))
+}
 
 private class UserDefaultsPreference(
     private val defaults: NSUserDefaults,
@@ -27,18 +25,16 @@ private class UserDefaultsPreference(
 
     override suspend fun columns(): List<String> = app().keys.sorted()
 
-    override suspend fun get(columnName: String): FloconPreferenceValue? {
-        return when (val value = defaults.objectForKey(columnName)) {
-            null -> null
-            is String -> FloconPreferenceValue(stringValue = value)
-            is Boolean -> FloconPreferenceValue(booleanValue = value)
-            is Int -> FloconPreferenceValue(intValue = value)
-            is Long -> FloconPreferenceValue(longValue = value)
-            is Float -> FloconPreferenceValue(floatValue = value)
-            is Double -> FloconPreferenceValue(floatValue = value.toFloat())
-            is List<*> -> FloconPreferenceValue(setStringValue = value.mapNotNull { it as? String }.toSet())
-            else -> FloconPreferenceValue(stringValue = value.toString())
-        }
+    override suspend fun get(columnName: String): FloconPreferenceValue? = when (val value = defaults.objectForKey(columnName)) {
+        null -> null
+        is String -> FloconPreferenceValue(stringValue = value)
+        is Boolean -> FloconPreferenceValue(booleanValue = value)
+        is Int -> FloconPreferenceValue(intValue = value)
+        is Long -> FloconPreferenceValue(longValue = value)
+        is Float -> FloconPreferenceValue(floatValue = value)
+        is Double -> FloconPreferenceValue(floatValue = value.toFloat())
+        is List<*> -> FloconPreferenceValue(setStringValue = value.mapNotNull { it as? String }.toSet())
+        else -> FloconPreferenceValue(stringValue = value.toString())
     }
 
     override suspend fun set(columnName: String, value: FloconPreferenceValue) {

@@ -24,4 +24,3 @@ data class HumanWithDogEntity(
     val humanId: Long,
     val dogId: Long,
 )
-

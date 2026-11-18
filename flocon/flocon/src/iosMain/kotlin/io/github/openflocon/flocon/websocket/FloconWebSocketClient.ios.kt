@@ -1,6 +1,5 @@
 package io.github.openflocon.flocon.websocket
 
-
 import io.github.openflocon.flocon.FloconLogger
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.darwin.Darwin
@@ -21,11 +20,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-internal actual fun buildFloconWebSocketClient(): FloconWebSocketClient {
-    return FloconWebSocketClientIOs()
-}
+internal actual fun buildFloconWebSocketClient(): FloconWebSocketClient = FloconWebSocketClientIOs()
 
-internal class FloconWebSocketClientIOs() : FloconWebSocketClient {
+internal class FloconWebSocketClientIOs : FloconWebSocketClient {
 
     private val client = HttpClient(Darwin.create { trustFloconDesktopCertificate() }) {
         install(WebSockets)
@@ -70,12 +67,14 @@ internal class FloconWebSocketClientIOs() : FloconWebSocketClient {
                                 FloconLogger.log("WEBSOCKET <----- received : $text")
                                 onMessageReceived(text)
                             }
+
                             is Frame.Close -> {
                                 FloconLogger.log("🔒 WebSocket closed (${frame.readReason()})")
                                 disconnect()
                                 onClosed()
                                 break
                             }
+
                             else -> Unit
                         }
                     }
@@ -87,7 +86,6 @@ internal class FloconWebSocketClientIOs() : FloconWebSocketClient {
                     onClosed()
                 }
             }
-
         } catch (t: Throwable) {
             FloconLogger.logError("❌ WebSocket connection failed : ${t.message}", t)
             throw t

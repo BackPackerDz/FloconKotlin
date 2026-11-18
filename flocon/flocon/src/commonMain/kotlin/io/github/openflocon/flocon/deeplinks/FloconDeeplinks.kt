@@ -22,8 +22,7 @@ import kotlinx.coroutines.launch
 object FloconDeeplinks : FloconPluginFactory<FloconDeeplinksConfig, FloconDeeplinksPlugin> {
     override val name: String = "Deeplinks"
     override val pluginId: String = Protocol.FromDevice.Deeplink.Plugin
-    override fun createConfig(context: FloconContext): FloconDeeplinksConfig =
-        FloconDeeplinksConfigImpl()
+    override fun createConfig(context: FloconContext): FloconDeeplinksConfig = FloconDeeplinksConfigImpl()
 
     override fun createEncoding(): FloconEncoding = FloconDeeplinkEncoding()
 
@@ -50,7 +49,8 @@ internal class FloconDeeplinksPluginImpl(
     private val sender: FloconMessageSender,
     private val encoder: FloconEncoder,
     dispatcher: CoroutineDispatcher = Dispatchers.Default.limitedParallelism(1),
-) : FloconPlugin, FloconDeeplinksPlugin {
+) : FloconPlugin,
+    FloconDeeplinksPlugin {
     override val key: String = Protocol.FromDevice.Deeplink.Plugin
 
     // only touched from [scope], which runs on a single thread

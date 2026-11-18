@@ -1,36 +1,36 @@
 package io.github.openflocon.flocon.websocket
 
 import io.github.openflocon.flocon.FloconFile
+import io.github.openflocon.flocon.FloconLogger
 import io.github.openflocon.flocon.model.FloconFileInfo
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.*
 import io.ktor.client.engine.cio.CIO
-import io.ktor.http.content.TextContent
-import io.github.openflocon.flocon.FloconLogger
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.http.*
-import io.ktor.client.plugins.logging.*
-import io.ktor.client.request.forms.*
 import io.ktor.client.plugins.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.logging.*
+import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
+import io.ktor.http.content.TextContent
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
-internal actual fun buildFloconHttpClient(): FloconHttpClient {
-    return FloconHttpClientJvm()
-}
+internal actual fun buildFloconHttpClient(): FloconHttpClient = FloconHttpClientJvm()
 
-internal class FloconHttpClientJvm() : FloconHttpClient {
+internal class FloconHttpClientJvm : FloconHttpClient {
 
     // client configurable selon la plateforme (Android, iOS, JVM, etc.)
     private val client = HttpClient(CIO.create { https { trustManager = FloconTrustAllManager } }) {
         install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-                prettyPrint = false
-            })
+            json(
+                Json {
+                    ignoreUnknownKeys = true
+                    prettyPrint = false
+                }
+            )
         }
         install(Logging) {
             level = LogLevel.INFO

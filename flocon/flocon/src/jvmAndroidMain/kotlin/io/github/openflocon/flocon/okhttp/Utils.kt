@@ -9,48 +9,69 @@ import okio.Buffer
 import okio.GzipSource
 import java.nio.charset.Charset
 
-internal fun getHttpMessage(httpCode: Int): String {
-    return when (httpCode) {
-        // 1xx Informational
-        100 -> "Continue"
-        101 -> "Switching Protocols"
-        103 -> "Early Hints"
+internal fun getHttpMessage(httpCode: Int): String = when (httpCode) {
+    // 1xx Informational
+    100 -> "Continue"
 
-        // 2xx Success
-        200 -> "OK"
-        201 -> "Created"
-        202 -> "Accepted"
-        204 -> "No Content"
-        206 -> "Partial Content"
+    101 -> "Switching Protocols"
 
-        // 3xx Redirection
-        300 -> "Multiple Choices"
-        301 -> "Moved Permanently"
-        302 -> "Found"
-        304 -> "Not Modified"
-        307 -> "Temporary Redirect"
-        308 -> "Permanent Redirect"
+    103 -> "Early Hints"
 
-        // 4xx Client Error
-        400 -> "Bad Request"
-        401 -> "Unauthorized"
-        403 -> "Forbidden"
-        404 -> "Not Found"
-        405 -> "Method Not Allowed"
-        408 -> "Request Timeout"
-        409 -> "Conflict"
-        410 -> "Gone"
-        429 -> "Too Many Requests"
+    // 2xx Success
+    200 -> "OK"
 
-        // 5xx Server Error
-        500 -> "Internal Server Error"
-        501 -> "Not Implemented"
-        502 -> "Bad Gateway"
-        503 -> "Service Unavailable"
-        504 -> "Gateway Timeout"
+    201 -> "Created"
 
-        else -> "Unknown"
-    }
+    202 -> "Accepted"
+
+    204 -> "No Content"
+
+    206 -> "Partial Content"
+
+    // 3xx Redirection
+    300 -> "Multiple Choices"
+
+    301 -> "Moved Permanently"
+
+    302 -> "Found"
+
+    304 -> "Not Modified"
+
+    307 -> "Temporary Redirect"
+
+    308 -> "Permanent Redirect"
+
+    // 4xx Client Error
+    400 -> "Bad Request"
+
+    401 -> "Unauthorized"
+
+    403 -> "Forbidden"
+
+    404 -> "Not Found"
+
+    405 -> "Method Not Allowed"
+
+    408 -> "Request Timeout"
+
+    409 -> "Conflict"
+
+    410 -> "Gone"
+
+    429 -> "Too Many Requests"
+
+    // 5xx Server Error
+    500 -> "Internal Server Error"
+
+    501 -> "Not Implemented"
+
+    502 -> "Bad Gateway"
+
+    503 -> "Service Unavailable"
+
+    504 -> "Gateway Timeout"
+
+    else -> "Unknown"
 }
 
 internal fun MediaType?.charsetOrUtf8(): Charset = this?.charset() ?: Charsets.UTF_8
@@ -126,9 +147,7 @@ internal fun extractRequestBodyInfo(
     return bodyString to bodySize
 }
 
-private fun Map<String, String>.getContentEncoding() : String? {
-    return get("Content-Encoding") ?: get("content-encoding")
-}
+private fun Map<String, String>.getContentEncoding(): String? = get("Content-Encoding") ?: get("content-encoding")
 
 private fun Map<String, String>.isGzipped(): Boolean {
     val contentEncoding = getContentEncoding() ?: return false

@@ -45,11 +45,9 @@ internal object SharedPreferencesFinder {
         return descriptors
     }
 
-    private fun getDefaultSharedPreferencesName(context: Context): String {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-            PreferenceManager.getDefaultSharedPreferencesName(context)
-        else
-            context.packageName + "_preferences"
+    private fun getDefaultSharedPreferencesName(context: Context): String = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        PreferenceManager.getDefaultSharedPreferencesName(context)
+    } else {
+        context.packageName + "_preferences"
     }
-
 }

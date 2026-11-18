@@ -21,7 +21,8 @@ internal class FloconTimelinePluginImpl(
     private val sender: FloconMessageSender,
     private val encoder: FloconEncoder,
     dispatcher: CoroutineDispatcher = Dispatchers.Default.limitedParallelism(1),
-) : FloconPlugin, FloconTimelinePlugin {
+) : FloconPlugin,
+    FloconTimelinePlugin {
 
     // the desktop is read only for now: there is no message to receive
     override val key: String = Protocol.FromDevice.Timeline.Plugin
@@ -50,14 +51,11 @@ internal class FloconTimelinePluginImpl(
         send(type = tag, value = value, params = params, level = level.toRemote())
     }
 
-    override fun logNavigation(value: String, params: Map<String, String>) =
-        log(FloconTimelineType.Navigation, value, params)
+    override fun logNavigation(value: String, params: Map<String, String>) = log(FloconTimelineType.Navigation, value, params)
 
-    override fun logUserAction(value: String, params: Map<String, String>) =
-        log(FloconTimelineType.UserAction, value, params)
+    override fun logUserAction(value: String, params: Map<String, String>) = log(FloconTimelineType.UserAction, value, params)
 
-    override fun logLifecycle(value: String, params: Map<String, String>) =
-        log(FloconTimelineType.Lifecycle, value, params)
+    override fun logLifecycle(value: String, params: Map<String, String>) = log(FloconTimelineType.Lifecycle, value, params)
 
     private fun send(type: String, value: String, params: Map<String, String>, level: String?) {
         // the timestamp is the moment of the call, not the moment the message is sent

@@ -5,10 +5,9 @@ import okhttp3.Protocol
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
-import okio.Buffer
 import okio.ByteString.Companion.decodeHex
-import kotlin.test.assertEquals
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class UtilsTest {
 
@@ -19,7 +18,7 @@ class UtilsTest {
         val brotliBytes = brotliHex.decodeHex().toByteArray()
 
         val responseBody = brotliBytes.toResponseBody("application/json".toMediaType())
-        
+
         val response = Response.Builder()
             .request(Request.Builder().url("https://example.com").build())
             .protocol(Protocol.HTTP_1_1)

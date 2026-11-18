@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.github.openflocon.flocon.Flocon
-import io.github.openflocon.flocon.myapplication.multi.timeline.Billing
 import io.github.openflocon.flocon.myapplication.multi.timeline.logBilling
 import io.github.openflocon.flocon.myapplication.multi.ui.SampleScreen
 import io.github.openflocon.flocon.myapplication.multi.ui.components.AccentButton

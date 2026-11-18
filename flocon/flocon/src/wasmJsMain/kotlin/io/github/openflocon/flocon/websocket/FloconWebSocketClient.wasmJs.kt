@@ -1,6 +1,5 @@
 package io.github.openflocon.flocon.websocket
 
-
 import io.github.openflocon.flocon.FloconLogger
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.js.Js
@@ -18,11 +17,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-internal actual fun buildFloconWebSocketClient(): FloconWebSocketClient {
-    return FloconWebSocketClientWasm()
-}
+internal actual fun buildFloconWebSocketClient(): FloconWebSocketClient = FloconWebSocketClientWasm()
 
-internal class FloconWebSocketClientWasm() : FloconWebSocketClient {
+internal class FloconWebSocketClientWasm : FloconWebSocketClient {
 
     private val client = HttpClient(Js.create()) {
         install(WebSockets)
@@ -64,12 +61,14 @@ internal class FloconWebSocketClientWasm() : FloconWebSocketClient {
                                 FloconLogger.log("WEBSOCKET <----- received : $text")
                                 onMessageReceived(text)
                             }
+
                             is Frame.Close -> {
                                 FloconLogger.log("🔒 WebSocket closed (${frame.readReason()})")
                                 disconnect()
                                 onClosed()
                                 break
                             }
+
                             else -> Unit
                         }
                     }
@@ -81,7 +80,6 @@ internal class FloconWebSocketClientWasm() : FloconWebSocketClient {
                     onClosed()
                 }
             }
-
         } catch (t: Throwable) {
             FloconLogger.logError("❌ WebSocket connection failed : ${t.message}", t)
             throw t

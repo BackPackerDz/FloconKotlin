@@ -30,13 +30,11 @@ object FloconTable : FloconPluginFactory<FloconTableConfig, FloconTablePlugin> {
         pluginConfig: FloconTableConfig,
         floconConfig: FloconConfig,
         encoder: FloconEncoder
-    ): FloconTablePlugin {
-        return FloconTablePluginImpl(
-            sender = floconConfig.client as FloconMessageSender,
-            encoder = encoder
-        )
-            .also { FloconTablePluginImpl.plugin = it }
-    }
+    ): FloconTablePlugin = FloconTablePluginImpl(
+        sender = floconConfig.client as FloconMessageSender,
+        encoder = encoder
+    )
+        .also { FloconTablePluginImpl.plugin = it }
 }
 
 val Flocon.Companion.tablePlugin: FloconTablePlugin
@@ -52,7 +50,8 @@ private class NoOpTablePlugin : FloconTablePlugin {
 internal class FloconTablePluginImpl(
     private val sender: FloconMessageSender,
     private val encoder: FloconEncoder
-) : FloconPlugin, FloconTablePlugin {
+) : FloconPlugin,
+    FloconTablePlugin {
     override val key: String = Protocol.ToDevice.Table.Plugin
 
     override suspend fun onMessageReceived(

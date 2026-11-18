@@ -78,8 +78,7 @@ class FloconWebViewClient(
 
     // The callbacks below are only forwarded, so wrapping the client never changes the app's behavior.
 
-    override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? =
-        delegate?.shouldInterceptRequest(view, request) ?: super.shouldInterceptRequest(view, request)
+    override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? = delegate?.shouldInterceptRequest(view, request) ?: super.shouldInterceptRequest(view, request)
 
     override fun onLoadResource(view: WebView?, url: String?) {
         delegate?.onLoadResource(view, url) ?: super.onLoadResource(view, url)
@@ -111,11 +110,9 @@ class FloconWebViewClient(
         delegate?.onReceivedClientCertRequest(view, request) ?: super.onReceivedClientCertRequest(view, request)
     }
 
-    override fun onRenderProcessGone(view: WebView?, detail: RenderProcessGoneDetail?): Boolean =
-        delegate?.onRenderProcessGone(view, detail) ?: super.onRenderProcessGone(view, detail)
+    override fun onRenderProcessGone(view: WebView?, detail: RenderProcessGoneDetail?): Boolean = delegate?.onRenderProcessGone(view, detail) ?: super.onRenderProcessGone(view, detail)
 
-    override fun shouldOverrideKeyEvent(view: WebView?, event: KeyEvent?): Boolean =
-        delegate?.shouldOverrideKeyEvent(view, event) ?: super.shouldOverrideKeyEvent(view, event)
+    override fun shouldOverrideKeyEvent(view: WebView?, event: KeyEvent?): Boolean = delegate?.shouldOverrideKeyEvent(view, event) ?: super.shouldOverrideKeyEvent(view, event)
 
     override fun onUnhandledKeyEvent(view: WebView?, event: KeyEvent?) {
         delegate?.onUnhandledKeyEvent(view, event) ?: super.onUnhandledKeyEvent(view, event)

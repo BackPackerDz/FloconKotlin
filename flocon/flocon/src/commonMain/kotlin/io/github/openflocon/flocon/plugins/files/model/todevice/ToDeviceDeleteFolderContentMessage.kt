@@ -8,4 +8,3 @@ internal data class ToDeviceDeleteFolderContentMessage(
     val path: String,
     val isConstantPath: Boolean, // true: the path is the id of a root folder
 )
-

@@ -21,9 +21,9 @@ import kotlinx.serialization.json.JsonClassDiscriminator
 @Serializable
 sealed interface DatabaseExecuteSqlResponse : DatabaseExecuteResponse {
 
+    // Case for successful SELECT queries
     @Serializable
     @SerialName("SELECT")
-    // Case for successful SELECT queries
     class Select(
         val columns: List<String>,
         val values: List<List<String?>>
@@ -52,7 +52,7 @@ sealed interface DatabaseExecuteSqlResponse : DatabaseExecuteResponse {
     @Serializable
     @SerialName("ERROR")
     class Error(
-        val message: String = "",       // Detailed error message
-        val originalSql: String = "",   // SQL query that caused the error (optional)
+        val message: String = "", // Detailed error message
+        val originalSql: String = "", // SQL query that caused the error (optional)
     ) : DatabaseExecuteSqlResponse
 }

@@ -45,27 +45,26 @@ private sealed interface ScanQrCodeResult {
     data class Failed(val reason: String) : ScanQrCodeResult
 }
 
-private suspend fun scanQrCode(context: Context): ScanQrCodeResult =
-    suspendCancellableCoroutine { continuation ->
-        val options = GmsBarcodeScannerOptions.Builder()
-            .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
-            .build()
-        GmsBarcodeScanning.getClient(context, options)
-            .startScan()
-            .addOnSuccessListener { barcode ->
-                val content = barcode.rawValue
-                continuation.resume(
-                    if (content == null) {
-                        ScanQrCodeResult.Failed("The QR code is empty")
-                    } else {
-                        ScanQrCodeResult.Code(content)
-                    }
-                )
-            }
-            .addOnCanceledListener {
-                continuation.resume(ScanQrCodeResult.Cancelled)
-            }
-            .addOnFailureListener { error ->
-                continuation.resume(ScanQrCodeResult.Failed(error.message ?: "The scanner failed"))
-            }
-    }
+private suspend fun scanQrCode(context: Context): ScanQrCodeResult = suspendCancellableCoroutine { continuation ->
+    val options = GmsBarcodeScannerOptions.Builder()
+        .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
+        .build()
+    GmsBarcodeScanning.getClient(context, options)
+        .startScan()
+        .addOnSuccessListener { barcode ->
+            val content = barcode.rawValue
+            continuation.resume(
+                if (content == null) {
+                    ScanQrCodeResult.Failed("The QR code is empty")
+                } else {
+                    ScanQrCodeResult.Code(content)
+                }
+            )
+        }
+        .addOnCanceledListener {
+            continuation.resume(ScanQrCodeResult.Cancelled)
+        }
+        .addOnFailureListener { error ->
+            continuation.resume(ScanQrCodeResult.Failed(error.message ?: "The scanner failed"))
+        }
+}

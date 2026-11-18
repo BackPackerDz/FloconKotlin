@@ -33,19 +33,18 @@ object FloconDashboard : FloconPluginFactory<FloconDashboardConfig, FloconDashbo
     override val name: String = "Dashboard"
     override val pluginId: String = Protocol.ToDevice.Dashboard.Plugin
     override fun createConfig(context: FloconContext) = FloconDashboardConfig()
-    override fun install(pluginConfig: FloconDashboardConfig, floconConfig: FloconConfig, encoder: FloconEncoder): FloconDashboardPlugin {
-        return FloconDashboardPluginImpl(
-            sender = floconConfig.client as FloconMessageSender,
-            encoder = encoder
-        )
-            .also { FloconDashboardPluginImpl.plugin = it }
-    }
+    override fun install(pluginConfig: FloconDashboardConfig, floconConfig: FloconConfig, encoder: FloconEncoder): FloconDashboardPlugin = FloconDashboardPluginImpl(
+        sender = floconConfig.client as FloconMessageSender,
+        encoder = encoder
+    )
+        .also { FloconDashboardPluginImpl.plugin = it }
 }
 
 internal class FloconDashboardPluginImpl(
     private val sender: FloconMessageSender,
     private val encoder: FloconEncoder
-) : FloconPlugin, FloconDashboardPlugin {
+) : FloconPlugin,
+    FloconDashboardPlugin {
     override val key: String = Protocol.ToDevice.Dashboard.Plugin
 
     private val DashboardDispatcher = Dispatchers.Default.limitedParallelism(1)

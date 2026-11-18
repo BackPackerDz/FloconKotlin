@@ -12,7 +12,6 @@ import platform.Foundation.NSNotificationCenter
 import platform.Foundation.NSNumber
 import platform.Foundation.NSOperationQueue
 import platform.Foundation.valueForKey
-import platform.darwin.NSObject
 import platform.UIKit.UIAccessibilityAnnouncementDidFinishNotification
 import platform.UIKit.UIAccessibilityAnnouncementKeyStringValue
 import platform.UIKit.UIAccessibilityAnnouncementKeyWasSuccessful
@@ -23,6 +22,7 @@ import platform.UIKit.UIAccessibilityIsSwitchControlRunning
 import platform.UIKit.UIAccessibilityIsVoiceOverRunning
 import platform.UIKit.UIAccessibilitySwitchControlStatusDidChangeNotification
 import platform.UIKit.UIAccessibilityVoiceOverStatusDidChangeNotification
+import platform.darwin.NSObject
 
 // the observers must stay referenced for the whole life of the app
 private val observers = mutableListOf<Any>()
@@ -86,16 +86,13 @@ private fun NSNotification.toFocusedEvent(): AccessibilityEvent {
     )
 }
 
-private fun NSNotification.toAnnouncementEvent(): AccessibilityEvent {
-    return AccessibilityEvent(
-        type = "ANNOUNCEMENT",
-        text = userInfo?.get(UIAccessibilityAnnouncementKeyStringValue)?.toString(),
-        extras = buildMap {
-            userInfo?.get(UIAccessibilityAnnouncementKeyWasSuccessful)?.let { put("success", it.toString()) }
-        },
-    )
-}
+private fun NSNotification.toAnnouncementEvent(): AccessibilityEvent = AccessibilityEvent(
+    type = "ANNOUNCEMENT",
+    text = userInfo?.get(UIAccessibilityAnnouncementKeyStringValue)?.toString(),
+    extras = buildMap {
+        userInfo?.get(UIAccessibilityAnnouncementKeyWasSuccessful)?.let { put("success", it.toString()) }
+    },
+)
 
 // the accessibility properties are declared on an informal protocol, read them with key-value coding
-private fun NSObject.stringProperty(key: String): String? =
-    (valueForKey(key) as? String)?.takeIf { it.isNotEmpty() }
+private fun NSObject.stringProperty(key: String): String? = (valueForKey(key) as? String)?.takeIf { it.isNotEmpty() }

@@ -54,9 +54,7 @@ internal object ComposeFocusOrder {
         children.forEach { it.collect(onFocusable) }
     }
 
-    private fun SemanticsNode.label(): String? {
-        return text() ?: contentDescription()
-    }
+    private fun SemanticsNode.label(): String? = text() ?: contentDescription()
 
     private fun SemanticsNode.text() = config.getOrNull(SemanticsProperties.Text)
         ?.joinToString(" ") { it.text }

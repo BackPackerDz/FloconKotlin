@@ -4,7 +4,6 @@ import io.github.openflocon.flocon.FloconContext
 import io.github.openflocon.flocon.FloconLogger
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSBundle
-import platform.Foundation.NSDataBase64Encoding64CharacterLineLength
 import platform.Foundation.base64EncodedStringWithOptions
 import platform.UIKit.UIImage
 import platform.UIKit.UIImagePNGRepresentation

@@ -150,7 +150,10 @@ class FloconOutboxTest {
 
     private class Desktop {
         val sent = CopyOnWriteArrayList<String>()
-        val link = FloconOutbox.Link { sent += it; true }
+        val link = FloconOutbox.Link {
+            sent += it
+            true
+        }
     }
 
     @Test

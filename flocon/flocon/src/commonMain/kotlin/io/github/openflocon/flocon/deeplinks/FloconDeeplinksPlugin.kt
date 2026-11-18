@@ -32,7 +32,6 @@ class DeeplinkLinkBuilder internal constructor(
         parameters = parameters.values
             .toList()
     )
-
 }
 
 class DeeplinkVariableBuilder internal constructor(
@@ -46,14 +45,11 @@ class DeeplinkVariableBuilder internal constructor(
         mode = DeeplinkVariable.Mode.AutoComplete(suggestions)
     }
 
-    internal fun build(): DeeplinkVariable {
-        return DeeplinkVariable(
-            name = name,
-            mode = mode,
-            description = description
-        )
-    }
-
+    internal fun build(): DeeplinkVariable = DeeplinkVariable(
+        name = name,
+        mode = mode,
+        description = description
+    )
 }
 
 internal data class DeeplinkVariable(
@@ -66,7 +62,6 @@ internal data class DeeplinkVariable(
         object Input : Mode
         data class AutoComplete(val suggestions: List<String>) : Mode
     }
-
 }
 
 interface FloconDeeplinksPlugin : FloconPlugin {

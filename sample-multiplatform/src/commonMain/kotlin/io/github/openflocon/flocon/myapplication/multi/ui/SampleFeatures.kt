@@ -180,8 +180,7 @@ object SampleFeatures {
         }
     }
 
-    fun isAnyUnavailable(screen: SampleScreen): Boolean =
-        SampleFeature.entries.any { it.screen == screen && status(it) is SampleFeatureStatus.Unavailable }
+    fun isAnyUnavailable(screen: SampleScreen): Boolean = SampleFeature.entries.any { it.screen == screen && status(it) is SampleFeatureStatus.Unavailable }
 
     /** Runs the action and records its result, shown on the row of the feature. */
     suspend fun run(feature: SampleFeature) {

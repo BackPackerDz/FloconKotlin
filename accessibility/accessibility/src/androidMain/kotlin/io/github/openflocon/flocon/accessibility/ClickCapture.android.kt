@@ -14,10 +14,10 @@ import android.view.ViewConfiguration
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
-import android.view.accessibility.AccessibilityEvent as AndroidAccessibilityEvent
 import android.widget.TextView
 import io.github.openflocon.flocon.FloconLogger
 import io.github.openflocon.flocon.accessibility.model.AccessibilityEvent
+import android.view.accessibility.AccessibilityEvent as AndroidAccessibilityEvent
 
 internal const val CLICK_EVENT_TYPE = "CLICK"
 
@@ -88,8 +88,11 @@ private class FloconWindowCallback(
     private fun observe(event: MotionEvent): AccessibilityEvent? {
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> tapDetector.onDown(event.rawX, event.rawY, event.eventTime)
+
             MotionEvent.ACTION_MOVE -> tapDetector.onMove(event.rawX, event.rawY)
+
             MotionEvent.ACTION_POINTER_DOWN, MotionEvent.ACTION_CANCEL -> tapDetector.cancel()
+
             MotionEvent.ACTION_UP -> {
                 if (tapDetector.onUp(event.rawX, event.rawY, event.eventTime)) {
                     return findClickEvent(window.decorView, event.rawX, event.rawY, screen)
@@ -107,23 +110,19 @@ private class FloconWindowCallback(
 
     override fun dispatchGenericMotionEvent(event: MotionEvent?): Boolean = original.dispatchGenericMotionEvent(event)
 
-    override fun dispatchPopulateAccessibilityEvent(event: AndroidAccessibilityEvent?): Boolean =
-        original.dispatchPopulateAccessibilityEvent(event)
+    override fun dispatchPopulateAccessibilityEvent(event: AndroidAccessibilityEvent?): Boolean = original.dispatchPopulateAccessibilityEvent(event)
 
     override fun onCreatePanelView(featureId: Int): View? = original.onCreatePanelView(featureId)
 
     override fun onCreatePanelMenu(featureId: Int, menu: Menu): Boolean = original.onCreatePanelMenu(featureId, menu)
 
-    override fun onPreparePanel(featureId: Int, view: View?, menu: Menu): Boolean =
-        original.onPreparePanel(featureId, view, menu)
+    override fun onPreparePanel(featureId: Int, view: View?, menu: Menu): Boolean = original.onPreparePanel(featureId, view, menu)
 
     override fun onMenuOpened(featureId: Int, menu: Menu): Boolean = original.onMenuOpened(featureId, menu)
 
-    override fun onMenuItemSelected(featureId: Int, item: MenuItem): Boolean =
-        original.onMenuItemSelected(featureId, item)
+    override fun onMenuItemSelected(featureId: Int, item: MenuItem): Boolean = original.onMenuItemSelected(featureId, item)
 
-    override fun onWindowAttributesChanged(attrs: WindowManager.LayoutParams?) =
-        original.onWindowAttributesChanged(attrs)
+    override fun onWindowAttributesChanged(attrs: WindowManager.LayoutParams?) = original.onWindowAttributesChanged(attrs)
 
     override fun onContentChanged() = original.onContentChanged()
 
@@ -140,11 +139,9 @@ private class FloconWindowCallback(
 
     override fun onSearchRequested(searchEvent: SearchEvent?): Boolean = original.onSearchRequested(searchEvent)
 
-    override fun onWindowStartingActionMode(callback: ActionMode.Callback?): ActionMode? =
-        original.onWindowStartingActionMode(callback)
+    override fun onWindowStartingActionMode(callback: ActionMode.Callback?): ActionMode? = original.onWindowStartingActionMode(callback)
 
-    override fun onWindowStartingActionMode(callback: ActionMode.Callback?, type: Int): ActionMode? =
-        original.onWindowStartingActionMode(callback, type)
+    override fun onWindowStartingActionMode(callback: ActionMode.Callback?, type: Int): ActionMode? = original.onWindowStartingActionMode(callback, type)
 
     override fun onActionModeStarted(mode: ActionMode?) = original.onActionModeStarted(mode)
 

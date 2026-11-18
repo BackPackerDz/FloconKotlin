@@ -15,20 +15,17 @@ import io.ktor.utils.io.InternalAPI
 import io.ktor.utils.io.toByteArray
 import kotlin.coroutines.CoroutineContext
 
-
 @OptIn(InternalAPI::class)
-internal fun HttpResponse.cloneWithBody(newBody: ByteReadChannel): HttpResponse {
-    return object : HttpResponse() {
-        override val call: HttpClientCall = this@cloneWithBody.call
+internal fun HttpResponse.cloneWithBody(newBody: ByteReadChannel): HttpResponse = object : HttpResponse() {
+    override val call: HttpClientCall = this@cloneWithBody.call
 
-        override val coroutineContext: CoroutineContext = this@cloneWithBody.coroutineContext
-        override val headers: Headers = this@cloneWithBody.headers
-        override val requestTime: GMTDate = this@cloneWithBody.requestTime
-        override val responseTime: GMTDate = this@cloneWithBody.responseTime
-        override val status: HttpStatusCode = this@cloneWithBody.status
-        override val version: HttpProtocolVersion = this@cloneWithBody.version
-        override val rawContent: ByteReadChannel = newBody
-    }
+    override val coroutineContext: CoroutineContext = this@cloneWithBody.coroutineContext
+    override val headers: Headers = this@cloneWithBody.headers
+    override val requestTime: GMTDate = this@cloneWithBody.requestTime
+    override val responseTime: GMTDate = this@cloneWithBody.responseTime
+    override val status: HttpStatusCode = this@cloneWithBody.status
+    override val version: HttpProtocolVersion = this@cloneWithBody.version
+    override val rawContent: ByteReadChannel = newBody
 }
 
 internal suspend fun extractAndReplaceRequestBody(request: HttpRequestBuilder): String? {
@@ -52,20 +49,17 @@ internal suspend fun extractAndReplaceRequestBody(request: HttpRequestBuilder): 
     }
 
     return when (originalBody) {
-        is OutgoingContent.WriteChannelContent -> null // Still complex to handle
+        is OutgoingContent.WriteChannelContent -> null
+
+        // Still complex to handle
         is OutgoingContent.NoContent -> null
+
         else -> originalBody?.toString()
     }
 }
 
-private fun Map<String, String>.getContentEncoding() : String? {
-    return get("Content-Encoding") ?: get("content-encoding")
-}
+private fun Map<String, String>.getContentEncoding(): String? = get("Content-Encoding") ?: get("content-encoding")
 
-private fun Map<String, String>.isGzipped(): Boolean {
-    return "gzip".equals(getContentEncoding(), ignoreCase = true)
-}
+private fun Map<String, String>.isGzipped(): Boolean = "gzip".equals(getContentEncoding(), ignoreCase = true)
 
-internal fun Map<String, String>.isBrotli(): Boolean {
-    return "br".equals(getContentEncoding(), ignoreCase = true)
-}
+internal fun Map<String, String>.isBrotli(): Boolean = "br".equals(getContentEncoding(), ignoreCase = true)

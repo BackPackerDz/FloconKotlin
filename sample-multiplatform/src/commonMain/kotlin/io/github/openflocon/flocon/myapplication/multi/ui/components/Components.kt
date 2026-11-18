@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.dp
 import io.github.openflocon.flocon.myapplication.multi.ui.ActionResult
 import io.github.openflocon.flocon.myapplication.multi.ui.SampleFeature
 import io.github.openflocon.flocon.myapplication.multi.ui.SampleFeatureStatus
-import io.github.openflocon.flocon.myapplication.multi.ui.SamplePlatform
 import io.github.openflocon.flocon.myapplication.multi.ui.SampleFeatures
+import io.github.openflocon.flocon.myapplication.multi.ui.SamplePlatform
 import io.github.openflocon.flocon.myapplication.multi.ui.theme.SampleCategory
 import io.github.openflocon.flocon.myapplication.multi.ui.theme.SampleIcons
 import io.github.openflocon.flocon.myapplication.multi.ui.theme.SampleTheme
@@ -227,7 +227,9 @@ fun ActionRow(feature: SampleFeature) {
                     Text(feature.description, style = MaterialTheme.typography.bodySmall, color = colors.inkMuted)
                     when (result) {
                         null -> Unit
+
                         ActionResult.Running -> Text("Running…", style = MaterialTheme.typography.bodySmall, color = colors.inkMuted)
+
                         is ActionResult.Success -> Text(
                             text = "✓ " + listOfNotNull(result.detail, "${result.millis} ms").joinToString(" · "),
                             style = MaterialTheme.typography.bodySmall,

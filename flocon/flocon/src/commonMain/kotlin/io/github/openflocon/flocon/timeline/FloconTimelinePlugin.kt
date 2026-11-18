@@ -40,13 +40,11 @@ object FloconTimeline : FloconPluginFactory<FloconTimelineConfig, FloconTimeline
         pluginConfig: FloconTimelineConfig,
         floconConfig: FloconConfig,
         encoder: FloconEncoder,
-    ): FloconTimelinePlugin {
-        return FloconTimelinePluginImpl(
-            sender = floconConfig.client as FloconMessageSender,
-            encoder = encoder,
-        )
-            .also { FloconTimelinePluginImpl.plugin = it }
-    }
+    ): FloconTimelinePlugin = FloconTimelinePluginImpl(
+        sender = floconConfig.client as FloconMessageSender,
+        encoder = encoder,
+    )
+        .also { FloconTimelinePluginImpl.plugin = it }
 }
 
 val Flocon.Companion.timelinePlugin: FloconTimelinePlugin

@@ -34,21 +34,19 @@ internal actual fun openDbAndExecuteQuery(
 
 // --- SQL execution helpers ---
 
-private fun executeSelect(connection: SQLiteConnection, query: String): DatabaseExecuteSqlResponse {
-    return connection.prepare(query).use { statement ->
-        val columnCount = statement.getColumnCount()
-        val columns = (0 until columnCount).map { statement.getColumnName(it) }
-        val rows = mutableListOf<List<String?>>()
+private fun executeSelect(connection: SQLiteConnection, query: String): DatabaseExecuteSqlResponse = connection.prepare(query).use { statement ->
+    val columnCount = statement.getColumnCount()
+    val columns = (0 until columnCount).map { statement.getColumnName(it) }
+    val rows = mutableListOf<List<String?>>()
 
-        while (statement.step()) {
-            val row = (0 until columnCount).map { idx ->
-                if (statement.isNull(idx)) null else statement.getText(idx)
-            }
-            rows.add(row)
+    while (statement.step()) {
+        val row = (0 until columnCount).map { idx ->
+            if (statement.isNull(idx)) null else statement.getText(idx)
         }
-
-        DatabaseExecuteSqlResponse.Select(columns, rows)
+        rows.add(row)
     }
+
+    DatabaseExecuteSqlResponse.Select(columns, rows)
 }
 
 private fun executeInsert(connection: SQLiteConnection, query: String): DatabaseExecuteSqlResponse {

@@ -8,7 +8,6 @@ class FloconRoom3DatabaseConfig internal constructor() {
     fun path(path: String) {
         paths.add(path)
     }
-
 }
 
 fun FloconDatabaseConfig.room(block: FloconRoom3DatabaseConfig.() -> Unit = {}) {

@@ -13,7 +13,5 @@ internal object AppUtils {
         }
     }
 
-    fun getAppPackageName(context: Context): String {
-        return context.packageName
-    }
+    fun getAppPackageName(context: Context): String = context.packageName
 }

@@ -30,7 +30,6 @@ interface FloconDatabasePlugin : FloconPlugin {
      * @param transaction the transaction of the query (BEGIN and COMMIT included), with the one nested in it. Null outside of a transaction
      */
     fun logQuery(dbId: String, sqlQuery: String, bindArgs: List<Any?>, transaction: FloconTransactionInfo?)
-
 }
 
 val Flocon.Companion.databasePlugin: FloconDatabasePlugin

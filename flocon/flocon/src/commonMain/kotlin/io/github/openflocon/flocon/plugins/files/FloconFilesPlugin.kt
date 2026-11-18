@@ -115,7 +115,8 @@ internal class FloconFilesPluginImpl(
     private val sender: FloconMessageSender,
     private val encoder: FloconEncoder,
     private val fileDataSource: FileDataSource = fileDataSource(context),
-) : FloconPlugin, FloconFilesPlugin {
+) : FloconPlugin,
+    FloconFilesPlugin {
 
     override val key: String = Protocol.ToDevice.Files.Plugin
     private val withFoldersSize = MutableStateFlow(false)

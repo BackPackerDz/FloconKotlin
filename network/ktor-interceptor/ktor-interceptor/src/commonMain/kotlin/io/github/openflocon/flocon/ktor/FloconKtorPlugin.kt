@@ -28,7 +28,6 @@ import io.ktor.utils.io.toByteArray
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
-
 data class FloconNetworkIsImageParams(
     val request: HttpRequest,
     val response: HttpResponse,
@@ -192,7 +191,9 @@ val FloconKtorPlugin = createClientPlugin("FloconKtorPlugin", ::FloconKtorPlugin
         val floconCallResponse = FloconNetworkResponse(
             httpCode = response.status.value,
             contentType = contentType,
-            body = if (isImage) null else {
+            body = if (isImage) {
+                null
+            } else {
                 if (responseHeadersMap.isBrotli()) {
                     decodeBrotli(originalBodyBytes)?.decodeToString() ?: BROTLI_BODY_PLACEHOLDER
                 } else {

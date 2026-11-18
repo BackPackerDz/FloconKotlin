@@ -20,11 +20,9 @@ abstract class FloconApp {
         )
 
         suspend fun disconnect()
-
     }
 
     open val client: Client? = null
 
     abstract val isInitialized: StateFlow<Boolean>
-
 }

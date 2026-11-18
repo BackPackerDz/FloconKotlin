@@ -12,14 +12,13 @@ import io.github.openflocon.flocon.accessibility.FloconAccessibility
 import io.github.openflocon.flocon.analytics.FloconAnalytics
 import io.github.openflocon.flocon.database.core.FloconDatabase
 import io.github.openflocon.flocon.database.room3.room
-import io.github.openflocon.flocon.featureflags.FloconFeatureFlags
-import io.github.openflocon.flocon.timeline.FloconTimeline
 import io.github.openflocon.flocon.deeplinks.FloconDeeplinks
+import io.github.openflocon.flocon.featureflags.FloconFeatureFlags
 import io.github.openflocon.flocon.ktor.FloconKtorPlugin
 import io.github.openflocon.flocon.myapplication.multi.DummyHttpKtorCaller
 import io.github.openflocon.flocon.myapplication.multi.database.initializeDatabases
-import io.github.openflocon.flocon.myapplication.multi.database.newFood
 import io.github.openflocon.flocon.myapplication.multi.database.model.DogEntity
+import io.github.openflocon.flocon.myapplication.multi.database.newFood
 import io.github.openflocon.flocon.myapplication.multi.ui.App
 import io.github.openflocon.flocon.myapplication.multi.ui.SampleFeature
 import io.github.openflocon.flocon.myapplication.multi.ui.SampleFeatures
@@ -27,8 +26,9 @@ import io.github.openflocon.flocon.myapplication.multi.ui.SamplePlatform
 import io.github.openflocon.flocon.network.core.FloconNetwork
 import io.github.openflocon.flocon.plugins.dashboard.FloconDashboard
 import io.github.openflocon.flocon.plugins.sharedprefs.FloconPreferences
-import io.github.openflocon.flocon.tables.FloconTable
 import io.github.openflocon.flocon.startFlocon
+import io.github.openflocon.flocon.tables.FloconTable
+import io.github.openflocon.flocon.timeline.FloconTimeline
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.js.Js
 import kotlin.time.Clock

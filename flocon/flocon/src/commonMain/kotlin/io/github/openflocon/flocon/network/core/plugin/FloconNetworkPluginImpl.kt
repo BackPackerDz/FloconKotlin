@@ -11,9 +11,9 @@ import io.github.openflocon.flocon.core.encode
 import io.github.openflocon.flocon.network.core.FloconNetworkPlugin
 import io.github.openflocon.flocon.network.core.datasource.FloconNetworkDataSource
 import io.github.openflocon.flocon.network.core.datasource.buildFloconNetworkDataSource
+import io.github.openflocon.flocon.network.core.mapper.WebSocketMockMessage
 import io.github.openflocon.flocon.network.core.mapper.decodeBadQualityConfig
 import io.github.openflocon.flocon.network.core.mapper.decodeMocks
-import io.github.openflocon.flocon.network.core.mapper.WebSocketMockMessage
 import io.github.openflocon.flocon.network.core.mapper.floconNetworkCallRequestToJson
 import io.github.openflocon.flocon.network.core.mapper.floconNetworkCallResponseToJson
 import io.github.openflocon.flocon.network.core.mapper.floconNetworkWebSocketEventToJson
@@ -38,7 +38,8 @@ internal class FloconNetworkPluginImpl(
     private val coroutineScope: CoroutineScope,
     private val encoder: FloconEncoder,
     private val dataSource: FloconNetworkDataSource = buildFloconNetworkDataSource(context = context, encoder = encoder),
-) : FloconPlugin, FloconNetworkPlugin {
+) : FloconPlugin,
+    FloconNetworkPlugin {
     override val key: String = Protocol.ToDevice.Network.Plugin
 
     private val websocketListeners =

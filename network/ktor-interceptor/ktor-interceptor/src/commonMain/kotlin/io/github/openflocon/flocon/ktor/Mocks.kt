@@ -10,7 +10,6 @@ import io.ktor.http.HeadersBuilder
 import io.ktor.http.HttpProtocolVersion
 import io.ktor.http.HttpStatusCode
 import io.ktor.util.date.GMTDate
-import io.ktor.util.logging.Logger
 import io.ktor.utils.io.ByteReadChannel
 import io.ktor.utils.io.InternalAPI
 import kotlinx.coroutines.delay

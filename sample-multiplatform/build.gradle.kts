@@ -50,7 +50,6 @@ kotlin {
 
             // Apollo (GraphQL)
             implementation(libs.apollo.runtime)
-
         }
 
         androidMain.dependencies {
@@ -79,7 +78,6 @@ kotlin {
             implementation(projects.datastores.datastores)
             implementation(projects.webview.webview)
         }
-
     }
 }
 
@@ -95,7 +93,6 @@ dependencies {
     }
     // Room 2, used by an Android only database to test the Room 2 module
     add("kspAndroid", libs.androidx.room.compiler)
-
 }
 
 sqldelight {

@@ -27,21 +27,19 @@ internal class FloconCrashReporterDataSourceAndroid(
         }
     }
 
-    override fun loadPendingCrashes(): List<CrashReportDataModel> {
-        return try {
-            crashesDir.listFiles()
-                ?.mapNotNull { file ->
-                    try {
-                        crashReportFromJson(file.readText())
-                    } catch (t: Throwable) {
-                        t.printStackTrace()
-                        null
-                    }
-                } ?: emptyList()
-        } catch (t: Throwable) {
-            FloconLogger.logError("Error loading pending crashes", t)
-            emptyList()
-        }
+    override fun loadPendingCrashes(): List<CrashReportDataModel> = try {
+        crashesDir.listFiles()
+            ?.mapNotNull { file ->
+                try {
+                    crashReportFromJson(file.readText())
+                } catch (t: Throwable) {
+                    t.printStackTrace()
+                    null
+                }
+            } ?: emptyList()
+    } catch (t: Throwable) {
+        FloconLogger.logError("Error loading pending crashes", t)
+        emptyList()
     }
 
     override fun deleteCrash(crashId: String) {
@@ -53,6 +51,4 @@ internal class FloconCrashReporterDataSourceAndroid(
     }
 }
 
-internal actual fun buildFloconCrashReporterDataSource(context: FloconContext): FloconCrashReporterDataSource {
-    return FloconCrashReporterDataSourceAndroid(context.context)
-}
+internal actual fun buildFloconCrashReporterDataSource(context: FloconContext): FloconCrashReporterDataSource = FloconCrashReporterDataSourceAndroid(context.context)

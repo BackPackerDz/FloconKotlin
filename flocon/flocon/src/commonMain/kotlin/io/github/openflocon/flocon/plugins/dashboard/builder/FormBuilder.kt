@@ -8,13 +8,11 @@ class FormBuilder(
     val onSubmitted: (Map<String, String>) -> Unit,
 ) : ContainerBuilder() {
 
-    override fun build(): FormConfig {
-        return FormConfig(
-            id = "form_$name",
-            name = name,
-            submitText = submitText,
-            elements = elements,
-            onSubmitted = onSubmitted
-        )
-    }
+    override fun build(): FormConfig = FormConfig(
+        id = "form_$name",
+        name = name,
+        submitText = submitText,
+        elements = elements,
+        onSubmitted = onSubmitted
+    )
 }

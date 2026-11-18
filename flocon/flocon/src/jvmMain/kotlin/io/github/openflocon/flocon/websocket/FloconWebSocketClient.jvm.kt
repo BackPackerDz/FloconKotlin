@@ -1,8 +1,8 @@
 package io.github.openflocon.flocon.websocket
 
 import io.github.openflocon.flocon.FloconLogger
-import io.ktor.client.engine.cio.CIO
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
 import io.ktor.client.plugins.websocket.WebSockets
@@ -22,11 +22,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import kotlin.time.Duration.Companion.seconds
 
-internal actual fun buildFloconWebSocketClient(): FloconWebSocketClient {
-    return FloconWebSocketClientJvm()
-}
+internal actual fun buildFloconWebSocketClient(): FloconWebSocketClient = FloconWebSocketClientJvm()
 
-internal class FloconWebSocketClientJvm() : FloconWebSocketClient {
+internal class FloconWebSocketClientJvm : FloconWebSocketClient {
 
     private val client = HttpClient(CIO.create { https { trustManager = FloconTrustAllManager } }) {
         install(WebSockets)
@@ -71,12 +69,14 @@ internal class FloconWebSocketClientJvm() : FloconWebSocketClient {
                                 FloconLogger.log("WEBSOCKET <----- received : $text")
                                 onMessageReceived(text)
                             }
+
                             is Frame.Close -> {
                                 FloconLogger.log("🔒 WebSocket closed (${frame.readReason()})")
                                 disconnect()
                                 onClosed()
                                 break
                             }
+
                             else -> Unit
                         }
                     }
@@ -88,7 +88,6 @@ internal class FloconWebSocketClientJvm() : FloconWebSocketClient {
                     onClosed()
                 }
             }
-
         } catch (t: Throwable) {
             FloconLogger.logError("❌ WebSocket connection failed : ${t.message}", t)
             throw t

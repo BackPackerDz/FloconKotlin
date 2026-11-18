@@ -9,7 +9,6 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.view.accessibility.AccessibilityEvent as AndroidAccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import android.view.accessibility.AccessibilityNodeInfo
 import android.view.accessibility.AccessibilityNodeProvider
@@ -19,6 +18,7 @@ import io.github.openflocon.flocon.accessibility.model.AccessibilityEvent
 import io.github.openflocon.flocon.accessibility.model.AccessibilityStateItem
 import java.util.Collections
 import java.util.WeakHashMap
+import android.view.accessibility.AccessibilityEvent as AndroidAccessibilityEvent
 
 internal actual fun startAccessibilityCapture(
     context: FloconContext,
@@ -61,11 +61,13 @@ internal actual fun startAccessibilityCapture(
                 if (!hookedDecorViews.add(decorView)) return
                 // clicks are captured from the touches, so they work without an accessibility service
                 installClickCapture(activity, onEvent)
-                decorView.setAccessibilityDelegate(FloconAccessibilityDelegate(
-                    previous = decorView.currentAccessibilityDelegate(),
-                    screen = activity.javaClass.name,
-                    onEvent = onEvent,
-                ))
+                decorView.setAccessibilityDelegate(
+                    FloconAccessibilityDelegate(
+                        previous = decorView.currentAccessibilityDelegate(),
+                        screen = activity.javaClass.name,
+                        onEvent = onEvent,
+                    )
+                )
             } catch (t: Throwable) {
                 FloconLogger.logError("error on hooking accessibility delegate", t)
             }
@@ -83,18 +85,16 @@ private fun AccessibilityManager.toState() = AccessibilityStateItem(
 )
 
 /** The getter is public from API 29, before that it is only reachable by reflection. */
-private fun View.currentAccessibilityDelegate(): View.AccessibilityDelegate? {
-    return try {
-        if (Build.VERSION.SDK_INT >= 29) {
-            accessibilityDelegate
-        } else {
-            View::class.java.getDeclaredMethod("getAccessibilityDelegate")
-                .apply { isAccessible = true }
-                .invoke(this) as? View.AccessibilityDelegate
-        }
-    } catch (t: Throwable) {
-        null
+private fun View.currentAccessibilityDelegate(): View.AccessibilityDelegate? = try {
+    if (Build.VERSION.SDK_INT >= 29) {
+        accessibilityDelegate
+    } else {
+        View::class.java.getDeclaredMethod("getAccessibilityDelegate")
+            .apply { isAccessible = true }
+            .invoke(this) as? View.AccessibilityDelegate
     }
+} catch (t: Throwable) {
+    null
 }
 
 /**
@@ -114,19 +114,15 @@ private class FloconAccessibilityDelegate(
         previous?.sendAccessibilityEvent(host, eventType) ?: super.sendAccessibilityEvent(host, eventType)
     }
 
-    override fun performAccessibilityAction(host: View, action: Int, args: Bundle?): Boolean {
-        return previous?.performAccessibilityAction(host, action, args)
-            ?: super.performAccessibilityAction(host, action, args)
-    }
+    override fun performAccessibilityAction(host: View, action: Int, args: Bundle?): Boolean = previous?.performAccessibilityAction(host, action, args)
+        ?: super.performAccessibilityAction(host, action, args)
 
     override fun sendAccessibilityEventUnchecked(host: View, event: AndroidAccessibilityEvent) {
         previous?.sendAccessibilityEventUnchecked(host, event) ?: super.sendAccessibilityEventUnchecked(host, event)
     }
 
-    override fun dispatchPopulateAccessibilityEvent(host: View, event: AndroidAccessibilityEvent): Boolean {
-        return previous?.dispatchPopulateAccessibilityEvent(host, event)
-            ?: super.dispatchPopulateAccessibilityEvent(host, event)
-    }
+    override fun dispatchPopulateAccessibilityEvent(host: View, event: AndroidAccessibilityEvent): Boolean = previous?.dispatchPopulateAccessibilityEvent(host, event)
+        ?: super.dispatchPopulateAccessibilityEvent(host, event)
 
     override fun onPopulateAccessibilityEvent(host: View, event: AndroidAccessibilityEvent) {
         previous?.onPopulateAccessibilityEvent(host, event) ?: super.onPopulateAccessibilityEvent(host, event)
@@ -177,9 +173,7 @@ private class FloconAccessibilityDelegate(
             ?: super.onRequestSendAccessibilityEvent(host, child, event)
     }
 
-    override fun getAccessibilityNodeProvider(host: View): AccessibilityNodeProvider? {
-        return previous?.getAccessibilityNodeProvider(host) ?: super.getAccessibilityNodeProvider(host)
-    }
+    override fun getAccessibilityNodeProvider(host: View): AccessibilityNodeProvider? = previous?.getAccessibilityNodeProvider(host) ?: super.getAccessibilityNodeProvider(host)
 }
 
 private fun AndroidAccessibilityEvent.toFloconEvent(screen: String): AccessibilityEvent {

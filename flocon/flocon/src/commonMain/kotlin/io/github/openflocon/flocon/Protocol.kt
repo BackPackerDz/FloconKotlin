@@ -4,7 +4,6 @@ object Protocol {
     object FromDevice {
         // lowercase: the desktop lowercases incoming plugin and method names
 
-
         object Analytics {
             const val Plugin = "analytics"
 
@@ -136,7 +135,6 @@ object Protocol {
                 const val AddBridgeCalls = "add_bridge_calls"
             }
         }
-
     }
 
     object ToDevice {
@@ -156,8 +154,7 @@ object Protocol {
         object Analytics {
             const val Plugin = "analytics"
 
-            object Method {
-            }
+            object Method
         }
 
         object Dashboard {
@@ -225,15 +222,13 @@ object Protocol {
         object Table {
             const val Plugin = "table"
 
-            object Method {
-            }
+            object Method
         }
 
         object WebView {
             const val Plugin = "webview"
 
-            object Method {
-            }
+            object Method
         }
     }
 }

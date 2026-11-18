@@ -12,26 +12,19 @@ class FloconGrpcFormatter(
 
     private val gson = buildGsonInstance(defaultFieldExcluder)
 
-    override fun <T> format(message: T): String =
-        gson.toJson(message)
+    override fun <T> format(message: T): String = gson.toJson(message)
 
     private fun buildGsonInstance(
         excluder: (name: String) -> Boolean,
-    ): Gson {
-        return GsonBuilder().setPrettyPrinting()
-            .setFieldNamingStrategy {
-                it.name.removeSuffix("_")
-            }
-            .setExclusionStrategies(object : ExclusionStrategy {
-                override fun shouldSkipField(f: FieldAttributes): Boolean {
-                    return excluder(f.name)
-                }
+    ): Gson = GsonBuilder().setPrettyPrinting()
+        .setFieldNamingStrategy {
+            it.name.removeSuffix("_")
+        }
+        .setExclusionStrategies(object : ExclusionStrategy {
+            override fun shouldSkipField(f: FieldAttributes): Boolean = excluder(f.name)
 
-                override fun shouldSkipClass(clazz: Class<*>): Boolean {
-                    return false
-                }
-            }).create()
-    }
+            override fun shouldSkipClass(clazz: Class<*>): Boolean = false
+        }).create()
 
     companion object {
         val excluded = setOf(

@@ -10,7 +10,6 @@ import io.github.openflocon.flocon.database.core.model.FloconDatabaseModel
 interface FloconRoom3DatabaseProvider : FloconDatabaseProvider {
 
     fun register()
-
 }
 
 internal expect class FloconRoom3DatabaseProviderImpl(

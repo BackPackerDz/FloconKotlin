@@ -1,6 +1,5 @@
 package io.github.openflocon.flocon
 
-
 /**
  * Bridge between [FloconBroadcastReceiver] (which must stay in this module, the desktop targets it by name)
  * and the device handler of the core.

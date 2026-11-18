@@ -10,4 +10,4 @@ internal data class AppInfos(
     val platform: String,
 )
 
-internal expect fun getAppInfos(floconContext: FloconContext) : AppInfos
+internal expect fun getAppInfos(floconContext: FloconContext): AppInfos

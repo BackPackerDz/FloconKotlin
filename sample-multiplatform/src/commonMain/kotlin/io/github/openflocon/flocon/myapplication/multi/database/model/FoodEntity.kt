@@ -10,4 +10,3 @@ data class FoodEntity(
     val type: String,
     val calories: Int,
 )
-

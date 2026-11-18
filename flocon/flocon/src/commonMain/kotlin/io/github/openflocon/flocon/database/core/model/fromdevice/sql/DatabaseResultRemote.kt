@@ -24,9 +24,13 @@ internal class DatabaseErrorRemote(
 internal fun DatabaseExecuteResponse.toRemoteResult(encoder: FloconEncoder): String {
     val remote = when (this) {
         is DatabaseExecuteSqlResponse.Select -> DatabaseResultRemote(type = "Select", body = encoder.encode(this))
+
         is DatabaseExecuteSqlResponse.Insert -> DatabaseResultRemote(type = "Insert", body = encoder.encode(this))
+
         is DatabaseExecuteSqlResponse.UpdateDelete -> DatabaseResultRemote(type = "UpdateDelete", body = encoder.encode(this))
+
         is DatabaseExecuteSqlResponse.RawSuccess -> DatabaseResultRemote(type = "RawSuccess", body = "{}")
+
         is DatabaseExecuteSqlResponse.Error -> DatabaseResultRemote(
             type = "Error",
             body = encoder.encode(DatabaseErrorRemote(message = message, originalSql = originalSql)),

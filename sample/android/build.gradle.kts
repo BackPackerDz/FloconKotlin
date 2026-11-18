@@ -49,8 +49,7 @@ android {
 @Suppress("UNCHECKED_CAST")
 val floconCoordinates = rootProject.extra["floconMavenCoordinates"] as Map<String, String>
 val floconUseMaven = rootProject.extra["floconUseMaven"] as Boolean
-fun flocon(module: ProjectDependency): Any =
-    if (floconUseMaven) floconCoordinates.getValue(module.path) else module
+fun flocon(module: ProjectDependency): Any = if (floconUseMaven) floconCoordinates.getValue(module.path) else module
 
 dependencies {
     implementation(projects.sampleMultiplatform)

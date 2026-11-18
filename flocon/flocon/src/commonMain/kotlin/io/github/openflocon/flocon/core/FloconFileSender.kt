@@ -6,5 +6,4 @@ import io.github.openflocon.flocon.model.FloconFileInfo
 interface FloconFileSender {
 
     fun send(file: FloconFile, infos: FloconFileInfo)
-
 }

@@ -29,17 +29,17 @@ import kotlinx.serialization.json.putJsonObject
 
 internal fun DashboardConfig.toJson(
     registerCallback: (DashboardCallback) -> Unit,
-): JsonObject {
-    return buildJsonObject {
-        put("dashboardId", id)
-        putJsonArray("containers") {
-            addAll(containers.map { container ->
+): JsonObject = buildJsonObject {
+    put("dashboardId", id)
+    putJsonArray("containers") {
+        addAll(
+            containers.map { container ->
                 container.toJson(
                     dashboardId = id,
                     registerCallback = registerCallback,
                 )
-            })
-        }
+            }
+        )
     }
 }
 
@@ -55,13 +55,15 @@ internal fun ContainerConfig.toJson(
 ): JsonObject = buildJsonObject {
     put("name", name)
     putJsonArray("elements") {
-        addAll(elements.map { element ->
-            parseElementConfig(
-                element = element,
-                registerCallback = registerCallback,
-                dashboardId = dashboardId
-            )
-        })
+        addAll(
+            elements.map { element ->
+                parseElementConfig(
+                    element = element,
+                    registerCallback = registerCallback,
+                    dashboardId = dashboardId
+                )
+            }
+        )
     }
 
     put(
@@ -92,10 +94,15 @@ private fun parseElementConfig(
     }
 
     is LabelConfig -> element.toJson()
+
     is TextConfig -> element.toJson()
+
     is PlainTextConfig -> element.toJson()
+
     is MarkdownConfig -> element.toJson()
+
     is HtmlConfig -> element.toJson()
+
     is TextFieldConfig -> {
         val actionId = createActionId(dashboardId, element.id)
 
@@ -207,7 +214,6 @@ internal fun TextFieldConfig.toJson(actionId: String): JsonObject = buildJsonObj
         put("value", value)
     }
 }
-
 
 // {
 //     "checkBox" : {

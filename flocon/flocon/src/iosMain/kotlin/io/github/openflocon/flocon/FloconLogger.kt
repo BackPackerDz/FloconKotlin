@@ -5,14 +5,14 @@ actual object FloconLogger {
     private const val TAG = "FloconLogger"
 
     actual fun logError(text: String, throwable: Throwable?) {
-        if(enabled) {
+        if (enabled) {
             println("ERROR $TAG: $text")
             throwable?.printStackTrace()
         }
     }
 
     actual fun log(text: String) {
-        if(enabled) {
+        if (enabled) {
             println("$TAG: $text")
         }
     }

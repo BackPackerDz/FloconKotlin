@@ -25,7 +25,6 @@ class FloconEncoder(
         deserializer = serializer,
         string = body
     )
-
 }
 
 inline fun <reified T> FloconEncoder.encode(body: T) = encode(

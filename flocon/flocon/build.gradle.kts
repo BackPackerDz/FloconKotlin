@@ -88,7 +88,6 @@ mavenPublishing {
         version = System.getenv("PROJECT_VERSION_NAME") ?: project.property("floconVersion") as String
     )
 
-
     pom {
         name = "Flocon"
     }

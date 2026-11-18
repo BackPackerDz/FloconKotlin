@@ -9,7 +9,7 @@ abstract class FloconDeeplinksConfig : FloconPluginConfig {
     abstract fun deeplink(link: String, block: DeeplinkLinkBuilder.() -> Unit = {})
 
     internal abstract fun deeplinks(): List<DeeplinkModel>
-    internal abstract  fun variables(): List<DeeplinkVariable>
+    internal abstract fun variables(): List<DeeplinkVariable>
 }
 
 internal class FloconDeeplinksConfigImpl internal constructor() : FloconDeeplinksConfig() {
@@ -33,5 +33,4 @@ internal class FloconDeeplinksConfigImpl internal constructor() : FloconDeeplink
 
     override fun deeplinks(): List<DeeplinkModel> = deeplinks.toList()
     override fun variables(): List<DeeplinkVariable> = variables.toList()
-
 }

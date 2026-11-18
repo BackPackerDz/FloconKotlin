@@ -18,14 +18,12 @@ internal class FeatureFlagSerializable(
     val payload: String? = null,
 )
 
-internal fun FloconFeatureFlag.toSerializable(): FeatureFlagSerializable {
-    return FeatureFlagSerializable(
-        name = name,
-        state = state.toRemote(),
-        variant = variant,
-        payload = payload,
-    )
-}
+internal fun FloconFeatureFlag.toSerializable(): FeatureFlagSerializable = FeatureFlagSerializable(
+    name = name,
+    state = state.toRemote(),
+    variant = variant,
+    payload = payload,
+)
 
 private fun FloconFeatureFlagState.toRemote(): String = when (this) {
     FloconFeatureFlagState.On -> "on"

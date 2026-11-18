@@ -31,8 +31,7 @@ interface FloconPluginKey<Config : Any, PluginInstance : Any> {
  * A factory for creating and installing Flocon plugins.
  * This is the entry point for Ktor-style [install] calls.
  */
-interface FloconPluginFactory<Config : FloconPluginConfig, PluginInstance : FloconPlugin> :
-    FloconPluginKey<Config, PluginInstance> {
+interface FloconPluginFactory<Config : FloconPluginConfig, PluginInstance : FloconPlugin> : FloconPluginKey<Config, PluginInstance> {
 
     fun createEncoding(): FloconEncoding = DefaultEncoding()
 
@@ -49,5 +48,4 @@ interface FloconPluginFactory<Config : FloconPluginConfig, PluginInstance : Floc
         floconConfig: FloconConfig,
         encoder: FloconEncoder
     ): PluginInstance
-
 }

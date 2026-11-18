@@ -1,8 +1,8 @@
 package io.github.openflocon.flocon.crashreporter.model
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 @Serializable
 internal data class CrashReportDataModel(
@@ -13,10 +13,6 @@ internal data class CrashReportDataModel(
     val stackTrace: String,
 )
 
-internal fun CrashReportDataModel.toJson(): String {
-    return Json.encodeToString(this)
-}
+internal fun CrashReportDataModel.toJson(): String = Json.encodeToString(this)
 
-internal fun crashReportFromJson(json: String): CrashReportDataModel {
-    return Json.decodeFromString(json)
-}
+internal fun crashReportFromJson(json: String): CrashReportDataModel = Json.decodeFromString(json)

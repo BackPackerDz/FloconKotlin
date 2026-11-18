@@ -11,10 +11,10 @@ import io.github.openflocon.flocon.Protocol
 import io.github.openflocon.flocon.core.FloconEncoder
 import io.github.openflocon.flocon.core.FloconMessageSender
 import io.github.openflocon.flocon.core.encode
-import io.github.openflocon.flocon.floconPlugin
-import io.github.openflocon.flocon.featureflags.mapper.toSerializable
 import io.github.openflocon.flocon.featureflags.mapper.FeatureFlagsSerializable
+import io.github.openflocon.flocon.featureflags.mapper.toSerializable
 import io.github.openflocon.flocon.featureflags.model.FloconFeatureFlag
+import io.github.openflocon.flocon.floconPlugin
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,20 +43,19 @@ object FloconFeatureFlags : FloconPluginFactory<FloconFeatureFlagsConfig, Flocon
         pluginConfig: FloconFeatureFlagsConfig,
         floconConfig: FloconConfig,
         encoder: FloconEncoder
-    ): FloconFeatureFlagsPlugin {
-        return FloconFeatureFlagsPluginImpl(
-            sender = floconConfig.client as FloconMessageSender,
-            encoder = encoder,
-        )
-            .also { FloconFeatureFlagsPluginImpl.plugin = it }
-    }
+    ): FloconFeatureFlagsPlugin = FloconFeatureFlagsPluginImpl(
+        sender = floconConfig.client as FloconMessageSender,
+        encoder = encoder,
+    )
+        .also { FloconFeatureFlagsPluginImpl.plugin = it }
 }
 
 internal class FloconFeatureFlagsPluginImpl(
     private val sender: FloconMessageSender,
     private val encoder: FloconEncoder,
     dispatcher: CoroutineDispatcher = Dispatchers.Default.limitedParallelism(1),
-) : FloconPlugin, FloconFeatureFlagsPlugin {
+) : FloconPlugin,
+    FloconFeatureFlagsPlugin {
 
     // the desktop is read only for now: there is no message to receive
     override val key: String = Protocol.FromDevice.FeatureFlags.Plugin

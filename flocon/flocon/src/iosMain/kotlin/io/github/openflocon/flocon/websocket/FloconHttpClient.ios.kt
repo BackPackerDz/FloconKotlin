@@ -1,8 +1,8 @@
 package io.github.openflocon.flocon.websocket
 
 import io.github.openflocon.flocon.FloconFile
-import io.github.openflocon.flocon.model.FloconFileInfo
 import io.github.openflocon.flocon.FloconLogger
+import io.github.openflocon.flocon.model.FloconFileInfo
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.darwin.Darwin
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -12,14 +12,14 @@ import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.forms.submitFormWithBinaryData
 import io.ktor.client.request.header
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.Headers
-import io.ktor.http.content.TextContent
-import io.ktor.client.request.post
-import io.ktor.client.request.setBody
-import io.ktor.http.isSuccess
 import io.ktor.http.HttpHeaders
+import io.ktor.http.content.TextContent
+import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.addressOf
@@ -39,19 +39,19 @@ private fun readBytes(path: String): ByteArray? {
     }
 }
 
-internal actual fun buildFloconHttpClient(): FloconHttpClient {
-    return FloconHttpClientIOs()
-}
+internal actual fun buildFloconHttpClient(): FloconHttpClient = FloconHttpClientIOs()
 
-internal class FloconHttpClientIOs() : FloconHttpClient {
+internal class FloconHttpClientIOs : FloconHttpClient {
 
     // client configurable selon la plateforme (Android, iOS, JVM, etc.)
     private val client = HttpClient(Darwin.create { trustFloconDesktopCertificate() }) {
         install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-                prettyPrint = false
-            })
+            json(
+                Json {
+                    ignoreUnknownKeys = true
+                    prettyPrint = false
+                }
+            )
         }
         install(Logging) {
             level = LogLevel.INFO

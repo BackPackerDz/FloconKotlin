@@ -32,7 +32,7 @@ object SampleIcons {
         "M3 12h18",
         "M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.5-3.5-9s1-6.5 3.5-9z",
     )
-    val FeatureFlags = icon("flags","M5 21V4M5 4h11l-2 4 2 4H5")
+    val FeatureFlags = icon("flags", "M5 21V4M5 4h11l-2 4 2 4H5")
     val Preferences = icon(
         "preferences",
         "M4 7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z",
@@ -59,22 +59,21 @@ object SampleIcons {
     val Connection = icon("connection", "M5 12.5a10 10 0 0 1 14 0", "M8.5 16a5 5 0 0 1 7 0", "M12 19.5v.01")
     val Crash = icon("crash", "M12 3L2 20h20z", "M12 10v5M12 18v.01")
 
-    private fun icon(name: String, vararg paths: String): ImageVector =
-        ImageVector.Builder(
-            name = name,
-            defaultWidth = 24.dp,
-            defaultHeight = 24.dp,
-            viewportWidth = 24f,
-            viewportHeight = 24f,
-        ).apply {
-            paths.forEach { data ->
-                addPath(
-                    pathData = PathParser().parsePathString(data).toNodes(),
-                    stroke = SolidColor(Color.Black),
-                    strokeLineWidth = 1.8f,
-                    strokeLineCap = StrokeCap.Round,
-                    strokeLineJoin = StrokeJoin.Round,
-                )
-            }
-        }.build()
+    private fun icon(name: String, vararg paths: String): ImageVector = ImageVector.Builder(
+        name = name,
+        defaultWidth = 24.dp,
+        defaultHeight = 24.dp,
+        viewportWidth = 24f,
+        viewportHeight = 24f,
+    ).apply {
+        paths.forEach { data ->
+            addPath(
+                pathData = PathParser().parsePathString(data).toNodes(),
+                stroke = SolidColor(Color.Black),
+                strokeLineWidth = 1.8f,
+                strokeLineCap = StrokeCap.Round,
+                strokeLineJoin = StrokeJoin.Round,
+            )
+        }
+    }.build()
 }

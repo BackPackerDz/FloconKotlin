@@ -22,4 +22,3 @@ interface DogDao {
     @Upsert
     suspend fun insertHumanWithDogEntity(humanWithDog: HumanWithDogEntity)
 }
-

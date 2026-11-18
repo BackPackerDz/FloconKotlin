@@ -9,8 +9,8 @@ import io.github.openflocon.flocon.FloconPluginConfig
 import io.github.openflocon.flocon.FloconPluginFactory
 import io.github.openflocon.flocon.Protocol
 import io.github.openflocon.flocon.analytics.model.AnalyticsEvent
-import io.github.openflocon.flocon.analytics.model.AnalyticsPropertiesConfig
 import io.github.openflocon.flocon.analytics.model.AnalyticsItem
+import io.github.openflocon.flocon.analytics.model.AnalyticsPropertiesConfig
 import io.github.openflocon.flocon.analytics.model.toItem
 import io.github.openflocon.flocon.core.FloconEncoder
 import io.github.openflocon.flocon.core.FloconMessageSender
@@ -32,11 +32,9 @@ class FloconAnalyticsSender internal constructor(
     private val plugin: FloconAnalyticsPlugin,
     val analyticsTableId: String,
 ) {
-    fun log(eventName: String, properties: List<AnalyticsPropertiesConfig> = emptyList()) =
-        plugin.log(AnalyticsEvent(eventName, analyticsTableId, properties))
+    fun log(eventName: String, properties: List<AnalyticsPropertiesConfig> = emptyList()) = plugin.log(AnalyticsEvent(eventName, analyticsTableId, properties))
 
-    fun log(eventName: String, vararg properties: AnalyticsPropertiesConfig) =
-        log(eventName, properties.toList())
+    fun log(eventName: String, vararg properties: AnalyticsPropertiesConfig) = log(eventName, properties.toList())
 
     fun log(event: AnalyticsEvent) = plugin.log(event.copy(analyticsTableId = analyticsTableId))
 }
@@ -49,19 +47,18 @@ object FloconAnalytics : FloconPluginFactory<FloconAnalyticsConfig, FloconAnalyt
         pluginConfig: FloconAnalyticsConfig,
         floconConfig: FloconConfig,
         encoder: FloconEncoder
-    ): FloconAnalyticsPlugin {
-        return FloconAnalyticsPluginImpl(
-            sender = floconConfig.client as FloconMessageSender,
-            encoder = encoder
-        )
-            .also { FloconAnalyticsPluginImpl.plugin = it }
-    }
+    ): FloconAnalyticsPlugin = FloconAnalyticsPluginImpl(
+        sender = floconConfig.client as FloconMessageSender,
+        encoder = encoder
+    )
+        .also { FloconAnalyticsPluginImpl.plugin = it }
 }
 
 internal class FloconAnalyticsPluginImpl(
     private val sender: FloconMessageSender,
     private val encoder: FloconEncoder
-) : FloconPlugin, FloconAnalyticsPlugin {
+) : FloconPlugin,
+    FloconAnalyticsPlugin {
     override val key: String
         get() = Protocol.ToDevice.Analytics.Plugin
 

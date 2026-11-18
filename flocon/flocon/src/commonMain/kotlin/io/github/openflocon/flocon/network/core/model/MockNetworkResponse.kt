@@ -31,9 +31,7 @@ data class MockNetworkResponse(
             val classPath: String,
             override val delay: Long,
         ) : Response {
-            fun generate() : Throwable? {
-                return io.github.openflocon.flocon.utils.createThrowableFromClassName(classPath)
-            }
+            fun generate(): Throwable? = io.github.openflocon.flocon.utils.createThrowableFromClassName(classPath)
         }
     }
 }

@@ -12,9 +12,7 @@ import java.util.concurrent.atomic.AtomicReference
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-internal actual fun buildFloconWebSocketClient(): FloconWebSocketClient {
-    return FloconWebSocketClientImpl()
-}
+internal actual fun buildFloconWebSocketClient(): FloconWebSocketClient = FloconWebSocketClientImpl()
 
 internal class FloconWebSocketClientImpl : FloconWebSocketClient {
 

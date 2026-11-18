@@ -14,13 +14,13 @@ import io.github.openflocon.flocon.core.encode
 import io.github.openflocon.flocon.crashreporter.model.CrashReportDataModel
 import io.github.openflocon.flocon.floconPlugin
 import io.github.openflocon.flocon.utils.currentTimeMillis
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 class FloconCrashReporterConfig : FloconPluginConfig {
     var catchFatalErrors: Boolean = true
@@ -62,7 +62,8 @@ internal class FloconCrashReporterPluginImpl(
     private var sender: FloconMessageSender,
     private val coroutineScope: CoroutineScope,
     private val encoder: FloconEncoder,
-) : FloconPlugin, FloconCrashReporterPlugin {
+) : FloconPlugin,
+    FloconCrashReporterPlugin {
     override val key: String = Protocol.FromDevice.CrashReporter.Plugin
 
     private val dataSource = buildFloconCrashReporterDataSource(context)
@@ -110,15 +111,13 @@ internal class FloconCrashReporterPluginImpl(
     }
 
     @OptIn(ExperimentalUuidApi::class)
-    private fun createCrashReport(throwable: Throwable): CrashReportDataModel {
-        return CrashReportDataModel(
-            crashId = Uuid.random().toString(),
-            timestamp = currentTimeMillis(),
-            exceptionType = throwable::class.simpleName ?: "Unknown",
-            exceptionMessage = throwable.message ?: "No message",
-            stackTrace = throwable.stackTraceToString(),
-        )
-    }
+    private fun createCrashReport(throwable: Throwable): CrashReportDataModel = CrashReportDataModel(
+        crashId = Uuid.random().toString(),
+        timestamp = currentTimeMillis(),
+        exceptionType = throwable::class.simpleName ?: "Unknown",
+        exceptionMessage = throwable.message ?: "No message",
+        stackTrace = throwable.stackTraceToString(),
+    )
 
     companion object {
         var plugin: FloconCrashReporterPlugin? = null

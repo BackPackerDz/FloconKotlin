@@ -6,9 +6,9 @@ import android.content.Context
 import androidx.core.content.edit
 import org.json.JSONArray
 import org.json.JSONObject
-import kotlin.uuid.Uuid
 import kotlin.random.Random
 import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 fun initializeSharedPreferences(context: Context) {
     context.getSharedPreferences("user_pref", Context.MODE_PRIVATE).apply {
@@ -36,7 +36,7 @@ fun initializeSharedPreferences(context: Context) {
     }
 }
 
-private fun generateUsersJson(number: Int) : JSONArray {
+private fun generateUsersJson(number: Int): JSONArray {
     val usersArray = JSONArray()
 
     for (i in 1..number) {
@@ -55,4 +55,3 @@ private fun generateUsersJson(number: Int) : JSONArray {
 
     return usersArray
 }
-
