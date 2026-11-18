@@ -41,7 +41,7 @@ Every feature is its own module, so you only ship what you use. Using the `floco
 
 | Artifact | Gradle path | What it is |
 |---|---|---|
-| `flocon` | `:flocon:flocon` | Core, plus the plugins with no extra dependency: network (OkHttp interceptor), database, preferences, files, analytics, deeplinks, feature flags, timeline, crash reporter, dashboards |
+| `flocon` | `:flocon:flocon` | Core, plus the plugins with no extra dependency: network (OkHttp interceptor), database, preferences, files, analytics, deeplinks, feature flags, timeline, crash reporter, dashboards, tables, WebView |
 | `flocon-no-op` | `:flocon:flocon-no-op` | Turns Flocon off in release builds (R8 removes the implementation) |
 | `flocon-bom` | `:bom` | Bill of materials |
 | `flocon-ktor-interceptor` | `:network:ktor-interceptor:ktor-interceptor` | Ktor network interceptor |
@@ -50,7 +50,6 @@ Every feature is its own module, so you only ship what you use. Using the `floco
 | `flocon-datastores` | `:datastores:datastores` | Typed DataStore |
 | `flocon-accessibility` / `-no-op` | `:accessibility:*` | Accessibility tools |
 | `flocon-qr-scanner` / `-no-op` | `:qrscanner:*` | QR scanner |
-| `flocon-webview` | `:webview` | WebView inspection |
 
 Samples: [`sample`](sample) (Android) and [`sample-multiplatform`](sample-multiplatform).
 

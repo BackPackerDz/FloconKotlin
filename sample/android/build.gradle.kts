@@ -63,7 +63,6 @@ dependencies {
     implementation(flocon(projects.network.ktorInterceptor.ktorInterceptor))
     implementation(flocon(projects.datastores.datastores))
     implementation(flocon(projects.accessibility.accessibility))
-    implementation(flocon(projects.webview.webview))
     implementation(flocon(projects.qrscanner.qrscanner))
 
     implementation(platform(libs.okhttp.bom))
