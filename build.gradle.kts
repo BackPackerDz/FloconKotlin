@@ -38,7 +38,6 @@ val floconModules = mapOf(
     ":grpc:grpc-interceptor:grpc-interceptor" to "flocon-grpc-interceptor",
     ":grpc:grpc-interceptor-lite:grpc-interceptor-lite" to "flocon-grpc-interceptor-lite",
     ":network:ktor-interceptor:ktor-interceptor" to "flocon-ktor-interceptor",
-    ":webview:webview" to "flocon-webview",
     ":qrscanner:qrscanner" to "flocon-qr-scanner",
 )
 
