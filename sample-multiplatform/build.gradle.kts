@@ -77,7 +77,6 @@ kotlin {
             implementation(libs.sqldelight.android.driver)
             implementation(libs.androidx.room.runtime)
             implementation(projects.datastores.datastores)
-            implementation(projects.webview.webview)
         }
 
     }
