@@ -2,6 +2,6 @@
 <network-security-config>
     <!-- The sample Greeter server runs on the developer's machine through adb reverse. -->
     <domain-config cleartextTrafficPermitted="true">
-        <domain>localhost</domain>
+        <domain includeSubdomains="false">localhost</domain>
     </domain-config>
 </network-security-config>
